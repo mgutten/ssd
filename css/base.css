@@ -1,0 +1,137 @@
+@charset "utf-8";
+/* Base css for entire project */
+
+/* general declarations */
+a {
+	text-decoration:none;
+	color:#000;
+	border:none;
+}
+
+img {
+	border:none;
+}
+
+.text {
+	font-family:Times New Roman, Times, serif;
+	font-size:14px;
+	color:#000;
+}
+
+/* main body */
+#body {
+	width:1100px;
+	height:100%;
+	margin-left:auto;
+	margin-right:auto;
+	background:#fff;
+}
+
+#body-lower {
+	width:100%;
+	height:auto;
+	float:left;
+	clear:both;
+	margin-top:15px;
+}
+
+/* navigation */
+#logo {
+	width:280px;
+	height:35px;
+	float:left;
+	margin: 70px 0px 0px 0px;
+	background:#fff;
+
+}
+
+.nav,.nav-bold {
+	float:right;
+	width:70px;
+	margin:90px 30px 0px 0px;
+	font-size:15px;
+	cursor:pointer;
+	text-align:center;
+
+}
+
+.nav-bold {
+	font-weight:bold;
+}
+
+.nav:hover {
+	font-weight: bold;
+}
+
+#nav-contact {
+	margin-right:0px;
+	width:75px;
+}
+
+#nav-products {
+	width:90px;
+}
+
+#nav-video {
+	width:60px;
+}
+
+#nav-press {
+	width:60px;
+}
+
+#nav-portfolio {
+	width:100px;
+}
+
+
+/* images */
+
+.img-back {
+	width:1100px;
+	height:700px;
+	float:left;
+	clear:both;
+}
+
+#about-img {
+	background:url(/images/about/back.jpg);
+}
+
+#home-img-shown {
+	position:relative;
+	z-index:2;
+}
+
+#home-img-hidden {
+	margin-top:-700px;
+	
+}
+
+/* text */
+
+.body-text-back {
+	float:left;
+	background:#fff;
+	width:auto;
+	height:auto;
+
+}
+
+.body-text {
+	float:left;
+	padding: 10px 10px 10px 10px;
+	font-size:12px;
+}
+
+#about-us-text {
+	float:right;
+	width:400px;
+	margin:70px 30px 0px 0px;
+}
+	
+
+
+
+	
+	

@@ -1,0 +1,51 @@
+@charset "utf-8";
+/* turn off all of display on load for home */
+
+.nav,.nav-bold,.img-back,#logo {
+	opacity:0;
+	filter:alpha(opacity=0);
+}
+
+#animation-container {
+	width:400px;
+	height:400px;
+	position:absolute;
+	top:50%;
+	left:50%;
+	margin:-200px 0px 0px -200px;
+	overflow:hidden;
+}
+
+#animation-container-inner {
+	float:left;
+	width:2000px;
+	height:400px;
+	margin-left:0px;
+}
+
+.animation-text {
+	position:absolute;
+	top:50%;
+	left:50%;
+	float:left;
+	font-size:200px;
+	margin:-100px 0px 0px -1100px;
+	letter-spacing:20px;
+}
+
+#animation-text1 {
+	position:absolute;
+}
+
+#animation-text2 {
+	margin-left:200px;	
+}
+
+#animation-logo {
+	position:absolute;
+	top:50%;
+	left:50%;
+	margin:-25px 0px 0px -200px;
+	opacity:0;
+	filter:alpha(opacity=0);
+}
