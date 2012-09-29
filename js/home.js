@@ -52,7 +52,7 @@ $(function() {
 function textMove() {
 		setTimeout(function() {
 				$('#animation-text1').animate({'margin-left':'200px'},5800);
-				$('#animation-text2').animate({'margin-left':'-1200px'},5800);
+				$('#animation-text2').animate({'margin-left':'-1420px'},5800);
 			}, 500);
 		
 		setTimeout(function() {

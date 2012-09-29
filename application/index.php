@@ -21,10 +21,10 @@ if(!empty($_SESSION['animation']))
 <div id='animation-container' class='animation'>
 
 	<div id='animation-container-inner' class='animation'>
-        <p class='animation-text' id='animation-text1' class='animation'>
+        <p class='animation-text text' id='animation-text1' class='animation'>
             SHUBEL
         </p>
-        <p class='animation-text' id='animation-text2' class='animation'>
+        <p class='animation-text text' id='animation-text2' class='animation'>
             STEPHEN
         </p>
     </div>

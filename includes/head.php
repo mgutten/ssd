@@ -205,7 +205,6 @@ class Navigation extends General {
 			
 				echo $this->nav($val);
 		}
-	
 		
 	}
 		
