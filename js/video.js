@@ -1,12 +1,16 @@
 // video javascript
 
 $(function() {
-		
+				
 	$('.video-play-button').click(function() {
-		
-		$('.flowplayer').css('z-index','1')
+
+		$('#jwplayer').css('z-index','1');
+
+		jwplayer().play();
+			
 
 	})
+	
 	
 });
 		

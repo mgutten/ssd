@@ -139,7 +139,7 @@ class Head extends General {
 
 class Navigation extends General {
 	
-	var $logo = '/images/nav/logo.jpg';
+	var $logo = '/images/nav/logo_large.jpg';
 	var $navigation = array('contact',
 								'credits',
 								'products',
