@@ -9,11 +9,11 @@ $body = new Body();
 $body->lower();
 ?>
 
-<div class='img-back' id='about-img'>
+<img src='/images/about/back.jpg' class='img-back' />
 
 	<div class='body-text-back' id='about-us-text'>
     
-    	<p class='text body-text'>
+    	<p class='body-text text'>
        		Stephen Shubel Design, Inc., a San Francisco firm, specializes in high-end residential interiors, 
             with over thirty years of experience in interior architecture and interior decorating. 
             Stephen Shubel, the principal designer, has been distinguished as one of "House Beautiful's Top 100 Designers" 
@@ -41,8 +41,7 @@ $body->lower();
         </p>
         
     </div>
-    
-</div>
+
 
 <?php
 $body->close();

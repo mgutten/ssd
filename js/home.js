@@ -12,7 +12,7 @@ var page = 'home';
 
 var timeout;
 //is animation running?
-var animation;
+var animation = false;
 
 $(function() {
 	
@@ -35,14 +35,15 @@ $(function() {
 	$(window).focus(function() {
 		
 		if(timeout == 0 && animation == false){
-				
 				setFade()
 			}
 	});
 		
 	$(window).blur(function() {
+		
 			clearInterval(timeout);
 			timeout = 0;
+			
 	});
 
 	
@@ -102,9 +103,9 @@ function fadeDocument() {
 		
 	animation = false;
 	
-	setTimeout(function() {
-			setFade();
-		}, 4000);
+
+	setFade();
+
 }
 
 //set fade effect for changing of images in imgs array
@@ -118,6 +119,8 @@ function setFade() {
 
 function imgFade() {
 	
+	animation = true;
+	
 	//fade out shown picture
 	$('#home-img-shown').animate({'opacity':'0'},700);
 	
@@ -125,6 +128,7 @@ function imgFade() {
 	setTimeout(function() {
 			$('#home-img-shown').attr('src',$('#home-img-hidden').attr('src'))
 								.css('opacity','1')
+			animation = false;
 	},740);
 	
 	//change hidden src to next pic

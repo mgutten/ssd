@@ -18,6 +18,13 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_URI} !\.\w+$
 RewriteRule ^(.*)/$ $1.php [L]
 
+#rewrite variables for individual pages
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI}  portfolio
+
+RewriteRule ^(.*)/(\d+)$ $1/index.php?page=$2 [L]
+
 
 php_value auto_prepend_file "X:/Program Files (x86)/Wamp/www/Local_site/ssd/includes/head.php"
 

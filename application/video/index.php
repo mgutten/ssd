@@ -14,25 +14,14 @@ $body->lower();
 ?>
 
 
-<div class='img-back' id='video-img'>
+<img src='/images/video/back.jpg' class='img-back' />
 	<div class='video-play-button'>
     </div>
 
-</div>
+
 
 <div id='jwplayer'></div>
  
-<script type='text/javascript'>
-  jwplayer('jwplayer').setup({
-    'flashplayer': 'player.swf',
-    'file': '/test.ogg',
-    'controlbar': 'over',
-    'width': '1100',
-    'height': '700',
-	'icons': false,
-	'skin': '/js/jwplayer/simple.zip'	
-  });
-</script>
 
 <!--
 
