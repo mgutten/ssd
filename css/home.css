@@ -12,14 +12,14 @@
 	position:absolute;
 	top:50%;
 	left:50%;
-	margin:-200px 0px 0px -200px;
+	margin:-250px 0px 0px -250px;
 	overflow:hidden;
 }
 
 #animation-container-inner {
 	float:left;
-	width:2000px;
-	height:400px;
+	width:5000px;
+	height:500px;
 	margin-left:0px;
 }
 
@@ -28,8 +28,7 @@
 	top:50%;
 	left:50%;
 	float:left;
-	font-size:250px;
-	margin:-125px 0px 0px -1300px;
+	margin:-200px 0px 0px -2350px;
 	letter-spacing:20px;
 }
 
@@ -45,7 +44,9 @@
 	position:absolute;
 	top:50%;
 	left:50%;
-	margin:-25px 0px 0px -200px;
+	margin:-25px 0px 0px -250px;
 	opacity:0;
 	filter:alpha(opacity=0);
+	height:auto;
+	width:400px;
 }

@@ -15,7 +15,7 @@ var running = 0;
 
 
 $(function() {
- 	
+	
     //set the font size using jquery
     $(".text").css("font-size", originalFontSize);
 	
@@ -23,8 +23,13 @@ $(function() {
 	originalBodWidth = 	.97 * $('#body').width();
 	
 	originalFontSize = originalBodWidth * 1/85;
-	originalMargin = parseInt($('.body-text').parent().css('margin-top'),10);
 	
+	//store original margin of each element within the lower body section
+	$('#body-lower').children().each(function() {
+		this.originalMargin = parseInt($(this).css('margin-top'),10)
+	})
+	
+	//adjust text size and positioning onload
 	textSize();
 	marginSize($('.body-text').parent());
  
@@ -32,13 +37,26 @@ $(function() {
     {
 		textSize();
 		marginSize($('.body-text').parent());
+		marginSize($('.margin-resize'));
 		animateMarginSize();
        
     })
+	
+
+	//move hidden home img behind shown img on page load
+	$('.margin-resize').one('load',function() {
+		
+		marginSize($(this));
+			
+	});
 
 	
 	//set container height and width for arrows
-	$('.arrow-container').css('height', getOriginalHeightOfImg());
+	$('.img-back').load(function() {
+		$('.arrow-container').each(function(){
+			$(this).css('height', $('.img-back').height() + 'px');
+		})
+	});
 	
 	/* animation effect for arrow clicks */
 	$('#next-arrow').click(function() {
@@ -134,11 +152,12 @@ function textSize() {
 }
 
 function marginSize(applied_element) {
-	
+		
+		var originalMargin = applied_element.prop('originalMargin');
 		var imgHeight = $('.img-back').height();
-			
+		
 		if(imgHeight == 0){
-			imgHeight = getOriginalHeightOfImg($('.img-back'))
+			imgHeight = getOriginalHeightOfImg()
 		}
 		
 		var newMargin = originalMargin - imgHeight;

@@ -4,7 +4,6 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/includes/head.php');
 
 $head = new Head('Video');
 echo $head->script('jwplayer/jwplayer');
-echo $head->style('video');
 echo $head->script('video');
 
 $head->close();
@@ -15,8 +14,21 @@ $body->lower();
 
 
 <img src='/images/video/back.jpg' class='img-back' />
-	<div class='video-play-button'>
-    </div>
+
+
+<div class='body-text-back' id='video-text'>
+    
+    	<p class='body-text text'>
+       		At SSD we believe our first responsibility is to our clients who use our furniture and services.
+            In meeting their needs everything we do must be of the highest quality.
+        </p>
+        
+</div>
+
+<img src='/images/video/play-button.png' class='video-play-button margin-resize' />
+
+
+
 
 
 

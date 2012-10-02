@@ -15,18 +15,16 @@ if(!empty($_SESSION['animation']))
 	echo "<span id='animation-clearance' class='nope'></span>";
 ?>
 
-<img src='/images/home/fade0.jpg' id='home-img-shown' class='img-back'/>
-<img src='/images/home/fade1.jpg' id='home-img-hidden' class='img-back'/>
+<img src='/images/home/home_01.jpg' id='home-img-shown' class='img-back'/>
+<img src='/images/home/home_04.jpg?<?php echo time();?>' id='home-img-hidden' class='img-back margin-resize'/>
 
 <div id='animation-container' class='animation'>
 
 	<div id='animation-container-inner' class='animation'>
-        <p class='animation-text text' id='animation-text1' class='animation'>
-            SHUBEL
-        </p>
-        <p class='animation-text text' id='animation-text2' class='animation'>
-            STEPHEN
-        </p>
+        <img src='../images/home/animation_shubel.png' class='animation-text animation' id='animation-text1' >
+
+        <img src='../images/home/animation_stephen.png' class='animation-text animation' id='animation-text2' >
+
     </div>
         
 

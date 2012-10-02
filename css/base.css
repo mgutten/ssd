@@ -18,11 +18,26 @@ img {
 	color:#000;
 }
 
+.underline {
+	text-decoration:none;
+}
+
+.underline:hover {
+	text-decoration:underline;
+}
+
+p.body-text {
+	margin: 3px;
+}
+	
+
 /* main body */
 #body {
 	width:90%;
-	min-width:990px;
+	min-width:1030px;
 	max-width:1236px;
+	/*IE 6 min-width hack*/
+	_width: expression(document.body.clientWidth < 1150 ? "1030px" : '90%');
 	height:100%;
 	margin-left:auto;
 	margin-right:auto;
@@ -40,11 +55,11 @@ img {
 
 /* navigation */
 #logo {
-	width:336px;
+	width:350px;
 	height:30px;
 	float:left;
-	margin: 60px 0px 0px 20px;
-	background:#fff;
+	margin: 64px 0px 0px 10px;
+	background:#CCC;
 
 }
 
@@ -52,7 +67,7 @@ img {
 	float:right;
 	width:70px;
 	height:15px;
-	margin:77px 15px 0px 0px;
+	margin:79px 15px 0px 0px;
 	font-size:15px;
 	cursor:pointer;
 	text-align:center;
@@ -98,8 +113,15 @@ img {
 	clear:both;
 }
 
+.img-back-credits {
+	width:40%;
+	height:auto;
+	float:left;
+	clear:both;
+}
 
 #home-img-shown {
+	float:left;
 	position:relative;
 	z-index:2;
 	width:100%;
@@ -108,7 +130,9 @@ img {
 }
 
 #home-img-hidden {
-	margin-top:-63.66%;
+	float:left;
+	clear:both;
+	margin-top:0px;
 	width:100%;
 	height:auto;
 	
@@ -116,7 +140,7 @@ img {
 
 /* text */
 
-.body-text-back {
+.body-text-back,.body-text-back-credits {
 	float:left;
 	background:#fff;
 	width:auto;
@@ -136,6 +160,35 @@ img {
 	margin:70px 30px 0px 0px;
 }
 
+#video-text {
+	float:right;
+	width:300px;
+	margin:180px 0px 0px 0px;
+	margin-right: 60%;
+}
+
+#products-text {
+	float:right;
+	width:300px;
+	margin:250px 0px 0px 0px;
+	margin-right: 50%;
+}
+
+#contact-text {
+	float:right;
+	width:auto;
+	margin:200px 0px 0px 0px;
+	margin-right: 10%;
+}
+
+#credits-text {
+	float:right;
+	width:auto;
+	height:100%;
+	margin:10px 306px 0px 0px;
+
+}
+
 /* arrows */
 
 #last-arrow,#next-arrow {
@@ -150,7 +203,7 @@ img {
 	clear:both;
 	margin-top:15px;
 	overflow:hidden;
-	width:1.5%;
+	width:1.4%;
 }		
 
 #next-arrow,#next-arrow-container {
@@ -159,7 +212,7 @@ img {
 
 /* portfolio */
 #animate-outer-container {
-	width:401%;
+	width:408%;
 	height:100%;
 	float:left;
 	margin-left:0px;
@@ -171,11 +224,34 @@ img {
 	float:left;
 	width:25%;
 	height:100%;
+	overflow:hidden;
+	margin-left:-1px;
 
 }
 
 .img-back-portfolio {
 	float:left;
-	width:33.3333%;
+	width:33%;
 	height:auto;
+}
+
+/* video */
+
+#jwplayer {
+	float:left;
+	clear:both;
+	position:relative;
+	z-index:-1;
+	display:none;
+}
+
+.video-play-button {
+	float:right;
+	position:relative;
+	z-index:1;
+	width:7.5%;
+	height:auto;
+	margin:172px 0px 0px 0px;
+	margin-right:51%;
+	cursor:pointer;
 }

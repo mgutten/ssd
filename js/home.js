@@ -1,10 +1,16 @@
 // home animations
 
 //array of images to be displayed (.jpg)
-var imgs = new Array('fade0',
-					'fade1',
-					'fade2',
-					'fade3');
+var imgs = new Array('home_01',
+					'home_04',
+					'home_02',
+					'home_10',
+					'home_03',
+					'home_07',
+					'home_06',
+					'home_09',
+					'home_05',
+					'home_08');
 //cur_img refers to hidden back img
 var cur_img = 0;	
 //page used to determine img location
@@ -53,7 +59,7 @@ $(function() {
 function textMove() {
 		setTimeout(function() {
 				$('#animation-text1').animate({'margin-left':'200px'},5800);
-				$('#animation-text2').animate({'margin-left':'-1420px'},5800);
+				$('#animation-text2').animate({'margin-left':'-2700px'},5800);
 			}, 500);
 		
 		setTimeout(function() {
@@ -80,8 +86,8 @@ function moveLogo() {
 	var top = parseInt($('#logo').offset().top,10) - parseInt($('#animation-logo').css('margin-top'),10) + 'px';
 	var left = parseInt($('#logo').offset().left,10) - parseInt($('#animation-logo').css('margin-left'),10)  + 'px';
 	
-	$('#animation-logo').animate({'width':'280px',
-									'height':'35px',
+	$('#animation-logo').animate({'width':'350px',
+									'height':'30px',
 									'top':top,
 									'left':left}, 3000);
 									
