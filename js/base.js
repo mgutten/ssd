@@ -11,7 +11,14 @@ var animateNumber = 1;
 //set the ratio of change for each size change
 var ratioOfChange = 100;
 
-var running = 0;
+//var to test if slide animation is already running
+var running = false;
+
+//var to test if fade after load is running
+var loadedFade = false;
+
+//var to be used to keep track of what img fades next in portfolio page
+var fadeOffset = 0;
 
 
 $(function() {
@@ -32,35 +39,40 @@ $(function() {
 	//adjust text size and positioning onload
 	textSize();
 	marginSize($('.body-text').parent());
+	
+	
  
-    $(window).resize(function()
-    {
+    $(window).resize(function() {
 		textSize();
 		marginSize($('.body-text').parent());
 		marginSize($('.margin-resize'));
 		animateMarginSize();
-       
     })
 	
-
+	
+	
 	//move hidden home img behind shown img on page load
 	$('.margin-resize').one('load',function() {
-		
-		marginSize($(this));
-			
+			marginSize($('.margin-resize'));
 	});
-
+	
+	/* IE fix for bug where img-hidden "load" function does not work */
+	if($.browser.msie && parseInt($.browser.version, 10) >= 9) {
+		$('#home-img-hidden').attr("src", $('#home-img-hidden').attr("src"));
+		$('#img-back-portfolio-last').attr('src',$('#img-back-portfolio-last').attr('src'));
+	}
+	
+	
 	
 	//set container height and width for arrows
-	$('.img-back').load(function() {
-		$('.arrow-container').each(function(){
-			$(this).css('height', $('.img-back').height() + 'px');
+	$('img:last').load(function() {
+		$('.arrow-container').each(function(){	
+			$(this).css('height', $('#body-lower').height() + 'px');
 		})
 	});
 	
 	/* animation effect for arrow clicks */
 	$('#next-arrow').click(function() {
-		
 		//set limit for how far scrolling can go
 		var limit = $('#animate-outer-container').width() - $('.animate-inner-container').width() -10;
 		
@@ -69,7 +81,6 @@ $(function() {
 			return;
 		
 		animateSlide(-1,$('#animate-outer-container'));
-		
 	});
 	
 	$('#last-arrow').click(function() {
@@ -81,18 +92,95 @@ $(function() {
 		
 	});
 	
-		
+
+
+	/* sequential fade effect for portfolio */
+	$('#img-back-portfolio-last').load(function() {
+			
+			sequentialFade('.img-back-portfolio',500)
+	})
+	
+	/* sequential fade effect for press */
+	$('#img-back-press-last').load(function() {
+
+			sequentialFade('.img-back-press', 200)
+	})
+	
+	/* whiteout effect for mouseover imgs */
+	$('.whiteout').hover(function() {
+			
+			if(loadedFade === false)
+				return;
+				
+			$(this).stop().animate({'opacity':'.3'},600);
+			
+			var height = $(this).height() + 'px';
+			var width = $(this).width() + 'px';
+			var top = $(this).offset().top + 'px';
+			var left = $(this).offset().left + 'px';
+			var text = $(this).attr('text');
+
+			
+			$('#hover-text').css({'height': height,
+									'width': width,
+									'top': top,
+									'left': left,
+									'display': 'block'
+								})
+								
+			$('.hover-text').html(text);
+			
+			
+							
+			
+		},
+		function() {
+			
+			if(loadedFade === false)
+				return;
+			
+			$(this).stop().animate({'opacity':'1'},600);
+			$('#hover-text').hide();
+	})
+	
 })
 
+
+function sequentialFade(classes, speed) {
+	
+		var ele = $(classes + ':eq(' + fadeOffset + ')');
+		
+		ele.animate({'opacity': '1'}, speed);
+		
+		var delay = speed/2;
+		
+		setTimeout(function() {
+				
+				//temp fix for portfolio arrows fade in
+				if(!ele.parent().is('#animate-inner-container1')){
+					//no longer need to hold off mouseover effects
+					loadedFade = true;
+					$('.arrow-container').animate({'opacity':'1'},500);
+				}
+				
+				//if last ele of that class, no more fades
+				if(ele.is(classes + ':last'))
+					return;
+				
+				fadeOffset++;
+				sequentialFade(classes, speed);
+		},delay)
+		
+}
 
 function animateSlide(nextOrLast, obj) {
 		
 		//test if animation is already running
 		//prevent multiple fires
-		if(running == 1)
+		if(running == true)
 			return;
 		else
-			running = 1;
+			running = true;
 		
 		animateNumber += nextOrLast * -1;
 		
@@ -104,7 +192,7 @@ function animateSlide(nextOrLast, obj) {
 		
 		//reset animation after done
 		setTimeout(function() {
-				running = 0;
+				running = false;
 			}, 450);
 }
 
@@ -153,7 +241,7 @@ function textSize() {
 
 function marginSize(applied_element) {
 		
-		var originalMargin = applied_element.prop('originalMargin');
+		var originalMargin = (applied_element.prop('originalMargin') ? applied_element.prop('originalMargin') : 0);
 		var imgHeight = $('.img-back').height();
 		
 		if(imgHeight == 0){
@@ -161,11 +249,16 @@ function marginSize(applied_element) {
 		}
 		
 		var newMargin = originalMargin - imgHeight;
-		
+
 		applied_element.css('margin-top', newMargin + 'px');
 		
+		
+		//if on press page and img-back is tiny
+		if(imgHeight < 300)
+			imgHeight = imgHeight * 3;
+			
 		//change height of arrow divs on either side
-		$('.arrow-container').css('height', imgHeight);
+		$('.arrow-container').css('height', imgHeight + 'px');
 		
 }
 

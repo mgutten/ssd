@@ -1,7 +1,7 @@
 @charset "utf-8";
 /* turn off all of display on load for home */
 
-.nav,.nav-bold,.img-back,#logo {
+.nav,.nav-bold,.img-back,#logo,#copyright {
 	opacity:0;
 	filter:alpha(opacity=0);
 }

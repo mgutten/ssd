@@ -22,34 +22,46 @@ var animation = false;
 
 $(function() {
 	
+
 	//if animation already seen, then skip to regular home
-	if($('#animation-clearance').attr('class') !== 'nope' &&
-			!($.browser.msie && $.browser.version == "6.0")){
+	if($('#animation-clearance').attr('class') == 'nope' ||
+			($.browser.msie && $.browser.version == "6.0")){
 		
-		animation = true;
-		textMove();
+			
+		$('.animation,#animation-logo').hide();
+		$('.nav,.img-back,.nav-bold,#logo,#copyright').css({'opacity':'1'});
+		setFade();
 		
 	}
 	else {
 		
-		$('.animation,#animation-logo').hide();
-		$('.nav,.img-back,.nav-bold,#logo').css({'opacity':'1'});
-		setFade();
+		/* IE fix for non firing "onload" event */
+		
+		$('.hidden:last').attr('src',$('.hidden:last').attr('src'));
+		
+		animation = true;
+		$('.hidden:last').load(function() {
+			textMove();
+		})
+		
+		
+	}
+	
+	
+	/* SAFARI FIX for jumping images on homepage */
+	if(navigator.userAgent.indexOf("Safari") > -1){
+		marginSize($('#home-img-hidden'))
 	}
 	
 	//pause image scrolling while browser is elsewhere
 	$(window).focus(function() {
-		
-		if(timeout == 0 && animation == false){
+		if(timeout == 0 && animation == false)
 				setFade()
-			}
 	});
 		
 	$(window).blur(function() {
-		
 			clearInterval(timeout);
 			timeout = 0;
-			
 	});
 
 	
@@ -58,13 +70,13 @@ $(function() {
 //animate text
 function textMove() {
 		setTimeout(function() {
-				$('#animation-text1').animate({'margin-left':'200px'},5800);
-				$('#animation-text2').animate({'margin-left':'-2700px'},5800);
+				$('#animation-text1').animate({'margin-left':'200px'},6800);
+				$('#animation-text2').animate({'margin-left':'-2700px'},6800);
 			}, 500);
 		
 		setTimeout(function() {
 				fadeIn();
-			}, 5800);	
+			}, 6800);	
 }
 
 //fade large center logo in 
@@ -99,7 +111,7 @@ function moveLogo() {
 
 //fade whole document in
 function fadeDocument() {
-	$('.nav,#home-img-shown,.nav-bold,#logo').animate({'opacity':'1'},700);
+	$('.nav,#home-img-shown,.nav-bold,#logo,#copyright').animate({'opacity':'1'},700);
 	$('.animation').hide();
 	
 	setTimeout(function() {
@@ -133,9 +145,12 @@ function imgFade() {
 	//change src to same as one showing
 	setTimeout(function() {
 			$('#home-img-shown').attr('src',$('#home-img-hidden').attr('src'))
-								.css('opacity','1')
+								
 			animation = false;
-	},740);
+			setTimeout(function() {
+				$('#home-img-shown').css('opacity','1')
+				}, 2000);
+	},780);
 	
 	//change hidden src to next pic
 	if(cur_img + 1 == imgs.length)

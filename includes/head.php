@@ -261,8 +261,6 @@ class Body extends General {
 	//close lower body
 	function close() {
 		
-		
-		
 		echo "</div>";
 		
 		echo "<div class='arrow-container' id='next-arrow-container'>";
@@ -271,6 +269,8 @@ class Body extends General {
 			echo "<img src='/images/arrows/next_arrow.jpg' id='next-arrow' />";
 			
 		echo "</div>";
+		
+		echo "<span id='copyright' class='text'>&copy; " . date('Y') . " STEPHEN SHUBEL DESIGN, INC.</span>";
 
 	}
 	
