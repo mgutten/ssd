@@ -60,6 +60,7 @@ $(function() {
 		if(loaded == false)
 			return;
 			
+			
 		$('#jwplayer').css({'z-index':'1','display':'block'})
 
 		jwplayer().play();
@@ -67,10 +68,13 @@ $(function() {
 
 	})
 	
+	
+	marginSize($('.video-resize'),true);
+	
 	 $(window).resize(function()
 	{
 		marginSize($('#jwplayer'));
-		marginSize($('.video-play-button'));
+		marginSize($('.video-resize'),true);
        
     })
 	

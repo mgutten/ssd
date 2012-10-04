@@ -47,9 +47,9 @@ $(function() {
 		
 	}
 	
-	
-	/* SAFARI FIX for jumping images on homepage */
-	if(navigator.userAgent.indexOf("Safari") > -1){
+	/* SAFARI AND IE FIX for jumping images on homepage */
+	if(navigator.userAgent.indexOf("Safari") > -1 ||
+			$.browser.msie){
 		marginSize($('#home-img-hidden'))
 	}
 	

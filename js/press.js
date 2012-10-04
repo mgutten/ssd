@@ -1,0 +1,1 @@
+// js for press page

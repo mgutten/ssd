@@ -20,7 +20,7 @@ img {
 
 .underline {
 	text-decoration:none;
-	cursor:pointer;
+
 }
 
 .underline:hover {
@@ -69,6 +69,11 @@ p.body-text {
 
 .hover-text-small {
 	font-size:10px;
+}
+
+.whiteout {
+	width:100%;
+	height:auto;
 }
 	
 
@@ -236,7 +241,7 @@ p.body-text {
 	float:right;
 	width:auto;
 	height:100%;
-	margin:60% 283px 0px 0px;
+	margin:10px 283px 0px 0px;
 
 }
 

@@ -42,6 +42,3 @@ $body->lower();
         
     </div>
 
-
-<?php
-$body->close();

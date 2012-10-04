@@ -15,7 +15,6 @@ $body->lower();
 
 //cancel animation if already seen it
 if(!empty($_SESSION['animation']))
-	echo '<span></span>';
 	//echo "<span id='animation-clearance' class='nope'></span>";
 ?>
 

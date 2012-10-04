@@ -34,7 +34,6 @@ $(function() {
 	$('.body-text').each(function() {
 			this.originalFontSize = parseInt($(this).css('font-size'),10) * (originalBodWidth * 1/1200);
 	})
-							
 	
 	//store original margin of each element within the lower body section
 	$('#body-lower').children().each(function() {
@@ -48,9 +47,12 @@ $(function() {
 	marginSize($('.margin-resize'));
 	
  
+ 
+ 	/* deal with img resize and window resize */
     $(window).resize(function() {
 		textSize();
 		marginSize($('.body-text').parent());
+		//moves top margin for home-img-hidden
 		marginSize($('.margin-resize'));
 		animateMarginSize();
 		
@@ -66,29 +68,31 @@ $(function() {
 		}
     })
 	
-	  //navigation alignment TO BE CHANGED WHEN VIDEO IS REMOVED----------
-	  if($(window).width() < 1150){
-		  $('.nav,.nav-bold').css('margin-right','8px')
-		  $('#nav-contact').css('margin-right','19px')
-	  }
-	  else{
-		  $('.nav,.nav-bold').css('margin-right','15px')
-		  $('#nav-contact').css('margin-right','19px')
+		//navigation alignment TO BE CHANGED WHEN VIDEO IS REMOVED----------
+		if($(window).width() < 1150){
+			$('.nav,.nav-bold').css('margin-right','8px')
+			$('#nav-contact').css('margin-right','19px')
+		}
+		else{
+			$('.nav,.nav-bold').css('margin-right','15px')
+			$('#nav-contact').css('margin-right','19px')
 
-	  }
-	
-	
+		}
 	
 	//move hidden home img behind shown img on page load
 	$('.margin-resize').one('load',function() {
 			marginSize($('.margin-resize'));
 	});
 	
+	
+	
+	
 	/* IE fix for bug where img-hidden "load" function does not work */
 	if($.browser.msie && parseInt($.browser.version, 10) >= 9) {
 		$('#home-img-hidden').attr("src", $('#home-img-hidden').attr("src"));
 		$('#img-back-portfolio-last').attr('src',$('#img-back-portfolio-last').attr('src'));
 	}
+	
 	
 	
 	
@@ -122,6 +126,7 @@ $(function() {
 	
 
 
+
 	/* sequential fade effect for portfolio */
 	$('#img-back-portfolio-last').load(function() {
 			
@@ -132,7 +137,7 @@ $(function() {
 	if($.browser.msie){
 		setTimeout(function() {
 			sequentialFade('.img-back-press',200)
-			}, 1000)
+			}, 1500)
 	}
 	else{
 		$('#img-back-press-last').load(function() {
@@ -285,30 +290,27 @@ function textSize() {
 			})
 }
 
-function marginSize(applied_element) {
+function marginSize(applied_element,fixedMargin) {
 		
 		var originalMargin = (applied_element.prop('originalMargin') ? applied_element.prop('originalMargin') : 0);
-		var imgHeight = getOriginalHeightOfImg();
-		//var imgHeight = $('.img-back').height();
+		//var imgHeight = getOriginalHeightOfImg();
+		var imgHeight = $('.img-back').height();
 		
-		
-		if(imgHeight == 0){
+		//if img-back not loaded or fixedMargin is true, move element 
+		//according to proper img ratios
+		if(imgHeight == 0 || fixedMargin){
 			imgHeight = getOriginalHeightOfImg()
 		}
-		
-		
+				
 		var newMargin = originalMargin - imgHeight;
-
+	
 		applied_element.css('margin-top', newMargin + 'px');
-		
-		
-		//change arrow height to match the img height (1st if = portfolio else press)
+						
+		//change arrow height to match the img height (press)
 		//since press img is 1/3 of total img height (3 press images per column)
-		if($('.img-back').height() !== imgHeight && $('.img-back').height() > imgHeight/2)
-			imgHeight = $('.img-back').height();
-		else
+		if($('.img-back').height() < ($('#body-lower').height()/2))
 			imgHeight = $('.img-back').height() * 3;
-		
+					
 		//change height of arrow divs on either side
 		$('.arrow-container').css('height', imgHeight + 'px');
 				

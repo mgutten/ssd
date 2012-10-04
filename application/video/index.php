@@ -14,9 +14,9 @@ $body->lower();
 
 
 <img src='/images/video/back.jpg' class='img-back' />
-<img src='/images/video/play-button.png' class='video-play-button margin-resize' />
+<img src='/images/video/play-button.png' class='video-play-button video-resize' />
 
-<div class='body-text-back' id='video-text'>
+<div class='body-text-back video-resize' id='video-text'>
     
     	<p class='body-text text larger-line'>
        		<span class='larger-text'>A</span>T <span class='larger-text'>SSD</span> WE BELIEVE OUR FIRST RESPONSIBILITY IS
@@ -25,9 +25,6 @@ $body->lower();
         </p>
         
 </div>
-
-
-
 
 
 
