@@ -127,13 +127,13 @@ $(function() {
 
 
 
-	/* sequential fade effect for portfolio */
+	/* sequential fade effect for portfolio 
 	$('#img-back-portfolio-last').load(function() {
 			
 			sequentialFade('.img-back-portfolio',500)
 	})
 	
-	/* sequential fade effect for press */
+	/* sequential fade effect for press 
 	if($.browser.msie){
 		setTimeout(function() {
 			sequentialFade('.img-back-press',200)
@@ -145,6 +145,7 @@ $(function() {
 				sequentialFade('.img-back-press', 200)
 		})
 	}
+	*/
 	
 	/* whiteout effect for mouseover imgs */
 	$('.whiteout').hover(function() {

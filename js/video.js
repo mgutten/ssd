@@ -11,8 +11,8 @@ $(function() {
 	
 	originalMargin = 0;
 	//find starting positions for player add 10 px to fix layout bug
-	playerHeight = Math.round(getOriginalHeightOfImg()) + 10;
-	playerWidth = (playerHeight - 10) * 1200/700;
+	playerHeight = Math.round(getOriginalHeightOfImg()) + 20;
+	playerWidth = (playerHeight - 20) * 1200/700;
 	playerMarginTop = playerHeight;
 		
 	
@@ -46,7 +46,7 @@ $(function() {
 	setTimeout(function() {
 			loaded = true;
 			document.getElementById('jwplayer').originalMargin = 0;
-			//marginSize($('#jwplayer'));
+			marginSize($('#jwplayer'));
 			$('#jwplayer').css('margin-top','-' + playerMarginTop + 'px');
 			
 	},1500);
@@ -59,7 +59,6 @@ $(function() {
 		//if player not loaded, do not do anything
 		if(loaded == false)
 			return;
-			
 			
 		$('#jwplayer').css({'z-index':'1','display':'block'})
 

@@ -35,7 +35,7 @@ $body->lower();
 
         <img src="/images/portfolio/4/portfolio_10.jpg" class='img-back-portfolio whiteout' text='SAN FRANCISCO LOFT'/>
         <img src="/images//portfolio/4/portfolio_12.jpg" class='img-back-portfolio whiteout' text='SONOMA SUMMER HOUSE'/>
-        <img src="/images//portfolio/4/portfolio_11.jpg" class='img-back-portfolio whiteout' id='img-back-portfolio-last' text='NORTH BAY COTTAGE'/>
+        <img src="/images//portfolio/4/portfolio_11.jpg" class='img-back-portfolio whiteout' id='img-back-portfolio-last' text='NORTH BAY COTTAGE' onload="sequentialFade('.img-back-portfolio',500)"/>
     
     </div>
     

@@ -62,7 +62,7 @@ $body->lower();
         <img src="/images/press/press_cover_43.jpg" class='img-back-press whiteout' text='HOUSE AND GARDEN</BR>FEBRUARY 1993'/>
         <img src="/images/press/press_cover_44.jpg" class='img-back-press whiteout' text='HOUSE BEAUTIFUL</BR>NOVEMBER 2000'/>
         <img src="/images/press/press_cover_45.jpg" class='img-back-press whiteout' text='VICTORIA</BR>DECEMBER 2002'/>
-        <img src="/images/press/press_cover_46.jpg" class='img-back-press whiteout' text='SENSATIONAL WORK SPACES'/>
+        <img src="/images/press/press_cover_46.jpg" class='img-back-press whiteout' text='SENSATIONAL WORK SPACES' onload="sequentialFade('.img-back-press',200)"/>
     
     </div>
     

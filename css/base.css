@@ -2,6 +2,13 @@
 /* Base css for entire project */
 
 /* general declarations */
+@font-face {
+	font-family: 'Garamond';
+	src:url('/css/fonts/adobe_garamond_regular.ttf') format('truetype');
+	src:local('Garamond'),
+	local('Adobe Garamond Regular')
+}
+
 a {
 	text-decoration:none;
 	color:#000;
