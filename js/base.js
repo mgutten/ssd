@@ -24,12 +24,17 @@ var fadeOffset = 0;
 $(function() {
 	
     //set the font size using jquery
-    $(".text").css("font-size", originalFontSize);
+    //$(".text").css("font-size", originalFontSize);
 	
 	//subtract 3% from body width to account for arrows on each side
 	originalBodWidth = 	.97 * $('#body').width();
 	
-	originalFontSize = originalBodWidth * 1/85;
+	//originalFontSize = originalBodWidth * 1/85;
+	//store original font size for body-text in ele
+	$('.body-text').each(function() {
+			this.originalFontSize = parseInt($(this).css('font-size'),10) * (originalBodWidth * 1/1200);
+	})
+							
 	
 	//store original margin of each element within the lower body section
 	$('#body-lower').children().each(function() {
@@ -39,7 +44,8 @@ $(function() {
 	//adjust text size and positioning onload
 	textSize();
 	marginSize($('.body-text').parent());
-	
+	/*IE BUG where onload does not always fire, used to move video-play-button onload in IE */
+	marginSize($('.margin-resize'));
 	
  
     $(window).resize(function() {
@@ -47,7 +53,29 @@ $(function() {
 		marginSize($('.body-text').parent());
 		marginSize($('.margin-resize'));
 		animateMarginSize();
+		
+		//navigation alignment TO BE CHANGED WHEN VIDEO IS REMOVED----------
+		if($(window).width() < 1150){
+			$('.nav,.nav-bold').css('margin-right','8px')
+			$('#nav-contact').css('margin-right','19px')
+		}
+		else{
+			$('.nav,.nav-bold').css('margin-right','15px')
+			$('#nav-contact').css('margin-right','19px')
+
+		}
     })
+	
+	  //navigation alignment TO BE CHANGED WHEN VIDEO IS REMOVED----------
+	  if($(window).width() < 1150){
+		  $('.nav,.nav-bold').css('margin-right','8px')
+		  $('#nav-contact').css('margin-right','19px')
+	  }
+	  else{
+		  $('.nav,.nav-bold').css('margin-right','15px')
+		  $('#nav-contact').css('margin-right','19px')
+
+	  }
 	
 	
 	
@@ -101,10 +129,17 @@ $(function() {
 	})
 	
 	/* sequential fade effect for press */
-	$('#img-back-press-last').load(function() {
-
-			sequentialFade('.img-back-press', 200)
-	})
+	if($.browser.msie){
+		setTimeout(function() {
+			sequentialFade('.img-back-press',200)
+			}, 1000)
+	}
+	else{
+		$('#img-back-press-last').load(function() {
+	
+				sequentialFade('.img-back-press', 200)
+		})
+	}
 	
 	/* whiteout effect for mouseover imgs */
 	$('.whiteout').hover(function() {
@@ -119,6 +154,11 @@ $(function() {
 			var top = $(this).offset().top + 'px';
 			var left = $(this).offset().left + 'px';
 			var text = $(this).attr('text');
+			
+			//adjust for the right-most column of press page so text can be centered on image 
+			//(img hangs over to next page)
+			if($(this).is('.last-column'))
+				width = parseInt(width,10) - 10 + 'px';
 
 			
 			$('#hover-text').css({'height': height,
@@ -143,6 +183,18 @@ $(function() {
 			$('#hover-text').hide();
 	})
 	
+	/*
+	$('.whiteout').click(function() {
+			
+			if(loadedFade === false)
+				return;
+				
+			$(this).css({'left':$(this).offset().left,
+						'position':'absolute'})
+					.animate({'left':'300px'},1000)
+	})
+	*/
+	
 })
 
 
@@ -157,10 +209,16 @@ function sequentialFade(classes, speed) {
 		setTimeout(function() {
 				
 				//temp fix for portfolio arrows fade in
-				if(!ele.parent().is('#animate-inner-container1')){
+				if(!ele.parent().is('#animate-inner-container1') && loadedFade == false){
 					//no longer need to hold off mouseover effects
 					loadedFade = true;
+					
+					if($('.arrow-container').height() < 300){
+							var height = ($('.img-back').height() < 300 ? ($('.img-back').height() * 3) : $('.img-back').height());
+							$('.arrow-container').css('height',height)
+					}
 					$('.arrow-container').animate({'opacity':'1'},500);
+
 				}
 				
 				//if last ele of that class, no more fades
@@ -213,53 +271,47 @@ function textSize() {
         var widthDiff = bodWidth - originalBodWidth;
 		
         //check if the window is larger or smaller than the original
-        if(widthDiff > 0)
-        {
 				
-            //our window is larger than the original so increase font size
-            var pixelsToIncrease = Math.round(widthDiff / ratioOfChange);
- 	
-
-            //calculate the new font size
-            var newFontSize = originalFontSize + pixelsToIncrease;
- 
-            //set new font size
-            $(".body-text").css("font-size", newFontSize);
-        }
-        else
-        {
-            //our window is smaller than the original so decrease font size
-            var pixelsToDecrease = Math.round(Math.abs(widthDiff) / ratioOfChange);
- 
-            //calculate the new font size
-            var newFontSize = originalFontSize - pixelsToDecrease;
- 
-            //set the new font size
-            $(".body-text").css("font-size", newFontSize);
-        }
+		//our window is larger than the original so increase font size
+		var pixelsToIncrease = Math.round(widthDiff / ratioOfChange);
+ 					
+			$('.body-text').each(function() {
+				
+				//calculate the new font size
+				var newFontSize =  $(this).prop('originalFontSize') + pixelsToIncrease;
+ 				
+				//set new font size
+				$(this).css("font-size", newFontSize + 'px');
+			})
 }
 
 function marginSize(applied_element) {
 		
 		var originalMargin = (applied_element.prop('originalMargin') ? applied_element.prop('originalMargin') : 0);
-		var imgHeight = $('.img-back').height();
+		var imgHeight = getOriginalHeightOfImg();
+		//var imgHeight = $('.img-back').height();
+		
 		
 		if(imgHeight == 0){
 			imgHeight = getOriginalHeightOfImg()
 		}
+		
 		
 		var newMargin = originalMargin - imgHeight;
 
 		applied_element.css('margin-top', newMargin + 'px');
 		
 		
-		//if on press page and img-back is tiny
-		if(imgHeight < 300)
-			imgHeight = imgHeight * 3;
-			
+		//change arrow height to match the img height (1st if = portfolio else press)
+		//since press img is 1/3 of total img height (3 press images per column)
+		if($('.img-back').height() !== imgHeight && $('.img-back').height() > imgHeight/2)
+			imgHeight = $('.img-back').height();
+		else
+			imgHeight = $('.img-back').height() * 3;
+		
 		//change height of arrow divs on either side
 		$('.arrow-container').css('height', imgHeight + 'px');
-		
+				
 }
 
 function getOriginalHeightOfImg() {

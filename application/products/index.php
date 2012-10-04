@@ -16,8 +16,9 @@ $body->lower();
 
 <div class='body-text-back' id='products-text'>
     
-    	<p class='body-text text'>
-       		WE'RE EXCITEDLY WORKING ON A NEW PRODUCT LINE.  COMING SOON.
+    	<p class='body-text text larger-line'>
+       		<span class='larger-text'>W</span>E'RE EXCITEDLY WORKING ON A NEW PRODUCT LINE.  </br>
+            <span class='larger-text'>P</span>LEASE <span class='underline red' title='Coming soon'>SUBSCRIBE</span> TO OUR MAILING LIST.
         </p>
         
 </div>

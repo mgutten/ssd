@@ -4,16 +4,22 @@ var playerHeight;
 var playerWidth;
 //loaded var to determine when jwplayer is done loading
 var loaded = false;
+var stretch;
 
 
 $(function() {
 	
 	originalMargin = 0;
-	//find starting positions for player
-	playerHeight = getOriginalHeightOfImg();
-	playerWidth = playerHeight * 1200/700;
+	//find starting positions for player add 10 px to fix layout bug
+	playerHeight = Math.round(getOriginalHeightOfImg()) + 10;
+	playerWidth = (playerHeight - 10) * 1200/700;
 	playerMarginTop = playerHeight;
+		
 	
+	if($.browser.msie)
+		var stretch = 'none';
+	else
+		var stretch = 'exactfit';
 	
 	//create jwplayer
 	jwplayer('jwplayer').setup({
@@ -30,7 +36,7 @@ $(function() {
 		controlbar: 'over',
 		width: playerWidth,
 		height: playerHeight,
-		stretching: 'exactfit',
+		stretching: stretch,
 		icons: false,
 		skin: '/js/jwplayer/simple.zip'
 		
@@ -40,9 +46,10 @@ $(function() {
 	setTimeout(function() {
 			loaded = true;
 			document.getElementById('jwplayer').originalMargin = 0;
-			marginSize($('#jwplayer'));
+			//marginSize($('#jwplayer'));
+			$('#jwplayer').css('margin-top','-' + playerMarginTop + 'px');
 			
-	},1000);
+	},1500);
 		
 	
 	//when click customized play button, move player forward

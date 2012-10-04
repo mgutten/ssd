@@ -14,18 +14,18 @@ $body->lower();
 
 
 <img src='/images/video/back.jpg' class='img-back' />
-
+<img src='/images/video/play-button.png' class='video-play-button margin-resize' />
 
 <div class='body-text-back' id='video-text'>
     
-    	<p class='body-text text'>
-       		At SSD we believe our first responsibility is to our clients who use our furniture and services.
-            In meeting their needs everything we do must be of the highest quality.
+    	<p class='body-text text larger-line'>
+       		<span class='larger-text'>A</span>T <span class='larger-text'>SSD</span> WE BELIEVE OUR FIRST RESPONSIBILITY IS
+             TO OUR CLIENTS WHO USE OUR FURNITURE AND SERVICES.
+            IN MEETING THEIR NEEDS EVERYTHING WE DO MUST BE OF THE HIGHEST QUALITY.
         </p>
         
 </div>
 
-<img src='/images/video/play-button.png' class='video-play-button margin-resize' />
 
 
 

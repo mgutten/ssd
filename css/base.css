@@ -20,6 +20,7 @@ img {
 
 .underline {
 	text-decoration:none;
+	cursor:pointer;
 }
 
 .underline:hover {
@@ -33,6 +34,15 @@ img {
 p.body-text {
 	margin: 3px;
 }
+
+.larger-text {
+	font-size:1.4em;
+}
+
+.larger-line {
+	line-height:1.5em;
+}
+
 
 #copyright {
 	float:right;
@@ -54,14 +64,18 @@ p.body-text {
 	top:50%;
 	margin-top:-10px;
 	text-align:center;
-	
+	padding:0px 0px 0px 0px;
+}
+
+.hover-text-small {
+	font-size:10px;
 }
 	
 
 /* main body */
 #body {
 	width:90%;
-	min-width:1030px;
+	min-width:990px;
 	max-width:1236px;
 	/*IE 6 min-width hack*/
 	_width: expression(document.body.clientWidth < 1150 ? "1030px" : '90%');
@@ -188,31 +202,41 @@ p.body-text {
 }
 
 #video-text {
+	position:relative;
+	bottom:20px;
 	float:right;
-	width:300px;
-	margin:180px 0px 0px 0px;
-	margin-right: 60%;
+	width:320px;
+	margin:45% 0px 0px 0px;
+	margin-right: 10%;
+	font-size:16px;
+	background:none;
 }
 
 #products-text {
+	position:relative;
 	float:right;
-	width:300px;
-	margin:250px 0px 0px 0px;
-	margin-right: 50%;
+	width:500px;
+	margin:43% -210px 0px 0px;
+	right:40%;
+	background:none;
+	font-size: 1em;
 }
 
 #contact-text {
-	float:right;
-	width:auto;
+	position:relative;
+	float:left;
+	width:350px;
 	margin:200px 0px 0px 0px;
-	margin-right: 10%;
+	left:50%;
+	background:none;
+	font-size: 18px;
 }
 
 #credits-text {
 	float:right;
 	width:auto;
 	height:100%;
-	margin:10px 306px 0px 0px;
+	margin:60% 283px 0px 0px;
 
 }
 
@@ -296,7 +320,13 @@ p.body-text {
 	z-index:1;
 	width:7.5%;
 	height:auto;
-	margin:172px 0px 0px 0px;
-	margin-right:51%;
+	margin:46% 0px 0px 0px;
+	margin-right:2%;
 	cursor:pointer;
+}
+
+/*override general declarations */
+
+.red {
+	color:#B90000;
 }
