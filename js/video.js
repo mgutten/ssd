@@ -68,12 +68,12 @@ $(function() {
 	})
 	
 	
-	marginSize($('.video-resize'),true);
+	marginSize($('.video-resize'));
 	
 	 $(window).resize(function()
 	{
 		marginSize($('#jwplayer'));
-		marginSize($('.video-resize'),true);
+		marginSize($('.video-resize'));
        
     })
 	

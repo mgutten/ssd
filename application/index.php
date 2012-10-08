@@ -14,8 +14,8 @@ $body = new Body();
 $body->lower();
 
 //cancel animation if already seen it
-if(!empty($_SESSION['animation']))
-	//echo "<span id='animation-clearance' class='nope'></span>";
+if(strpos($_SERVER['HTTP_REFERER'],'stephenshubel') > -1 )
+	echo "<span id='animation-clearance' class='nope'></span>";
 ?>
 
 <img src='/images/home/home_01.jpg' id='home-img-shown' class='img-back'/>
@@ -44,9 +44,9 @@ if(!empty($_SESSION['animation']))
 <img src='/images/home/home_07.jpg' class='hidden' />
 <img src='/images/home/home_08.jpg' class='hidden' />
 <img src='/images/home/home_09.jpg' class='hidden' />
-<img src='/images/home/home_10.jpg' class='hidden' />
+<img src='/images/home/home_10.jpg' class='hidden' onload="marginSize($('#home-img-hidden'))"/>
 
 <?php
 
 //set session so animation only happens when first come to site
-$_SESSION['animation'] = true;
+//$_SESSION['animation'] = true;

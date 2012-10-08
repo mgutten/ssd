@@ -42,6 +42,9 @@ class Head extends General {
 				//echo base <meta>, styles, scripts
 				echo "<meta http-equiv='Content-Type' name='description' content='".$meta_desc."'  />\n<meta http-equiv='Content-Type' name='keywords' content='".$meta_key."'  />\n";
 				
+				echo "<link rel='icon' href='/favicon.ico' type='image/x-icon'> 
+						<link rel='shortcut icon' href='/favicon.ico' type='image/x-icon'> ";
+						
 				echo $this->style($this->style);
 				echo $this->script($this->script);
 				
@@ -124,19 +127,13 @@ class Head extends General {
 		
 		function close() {
 				
-				//if in preview, add preview js and css
-				if(!empty($_SESSION['preview'])){
-					$this->script('preview');
-					$this->style('preview');
-				}
-				
 				//show title
-				$block = "<title>$this->title</title>\n";
+				$block = "<title>Stephen Shubel | $this->title</title>\n";
 				
 				//close <head> section
 				$block .= "</head>";
 				
-				return $block;
+				echo $block;
 				
 		}
 }

@@ -9,35 +9,26 @@ $body = new Body();
 $body->lower();
 ?>
 
-<img src='/images/about/back.jpg' class='img-back' />
+<img src='/images/about/back.jpg' class='img-back-about' />
 
 	<div class='body-text-back' id='about-us-text'>
     
     	<p class='body-text text'>
-       		Stephen Shubel Design, Inc., a San Francisco firm, specializes in high-end residential interiors, 
-            with over thirty years of experience in interior architecture and interior decorating. 
-            Stephen Shubel, the principal designer, has been distinguished as one of "House Beautiful's Top 100 Designers" 
-            for the last eight years. Our projects have graced the pages of over fifty domestic and international 
-            publications. The firm has a reputation for having fresh and inspiring design that is often sought 
-            after by the nation's leading interior design magazines.</br></br>
-
-            At SSD we believe our first responsibility is to our clients who use our furniture and services. 
-            In meeting their needs everything we do must be of the highest quality.</br></br>
+       		Stephen Shubel grew up in the San Francisco Bay Area.  An early passion for art led him to study at California College of Arts and Crafts.  
+            There he knew immediately that interior design was to become his life's direction.  He launched his design career as an independent designer early and never looked back.  
+            Today he is one of the most published interior designers and well-received decorators on the West Coast.</br></br>
+ 
+            Influenced by international travel, Shubel honed his eye to appreciate the beauty in antiques and unique items from all over the world. Spending time in Europe he 
+            developed a respect for anything done well and done with a relish for living.  He has grown to realize that beauty can be seen in both the simple and the sophisticated.  
+            Today he is known for his straight-forward approach, whether his client is an Academy Award winner or a young fashion model. </br></br>
+ 
+            Over the years his style can be described as eclectic, comfortable, striking, understated,  elegant, timely, fresh, and even classical.  
+            All these results are achieved with a single obsession for pleasing his clients' dreams and their personal styles.  The  measure for any of his success is to 
+            always be true to his own sensibilities.   A diligence for details and an inherent talent for understanding color, space, and texture, is always seen in his work.  
+            Shubel's interiors are honest and livable.</br></br>
             
-            Our focus is to meet the practical needs of clients and maintain beautiful design. While creating 
-            high-end interior furnishings and livable environments, we work closely with our clients to produce a 
-            personalized home.</br></br>
-            
-            We pride ourselves on our choice of local and international suppliers, sources and workrooms. Our long-standing 
-            relationships with our vendors insure high quality products and services. As designers we believe in sound 
-            fundamental principles that enable us to produce responsible, simple solutions.</br></br>
-            
-            As a firm we work well in a team environment. While collaborating with architects, contractors, landscape 
-            and lighting designers we are respectful of their expertise.</br></br>
-            
-            Our goal is to create a home that reflects the needs and personal style of the client, while 
-            always remaining sensitive to their budget. This strength, along with a sensitivity and respect for 
-            the architecture, the landscape, and the environment, form the cornerstone of our firm.
+            In 2011, House Beautiful honored Shubel with inclusion in its Roots of American Design, a milestone project highlighting the lineage of significant American designers 
+            from the eighteenth-century to present day.
         </p>
         
     </div>

@@ -19,9 +19,9 @@ $body->lower();
     </div>
     <div id='animate-inner-container2' class='animate-inner-container'>
 
-        <img src="/images/portfolio/2/portfolio_04.jpg" class='img-back-portfolio whiteout' text="PARIS PIED'A'TERRE"/>
+        <img src="/images/portfolio/2/portfolio_04.jpg" class='img-back-portfolio whiteout' text="PARIS PIED-&Aacute-TERRE"/>
         <img src="/images//portfolio/2/portfolio_05.jpg" class='img-back-portfolio whiteout' text='SAN FRANCISCO MANSION'/>
-        <img src="/images//portfolio/2/portfolio_06.jpg" class='img-back-portfolio whiteout' text='NORTH BAY BEACH HOUSE' />
+        <img src="/images//portfolio/2/portfolio_06.jpg" class='img-back-portfolio whiteout' text='BEACH HOUSE' />
     
     </div>
 	<div id='animate-inner-container3' class='animate-inner-container'>
@@ -35,7 +35,7 @@ $body->lower();
 
         <img src="/images/portfolio/4/portfolio_10.jpg" class='img-back-portfolio whiteout' text='SAN FRANCISCO LOFT'/>
         <img src="/images//portfolio/4/portfolio_12.jpg" class='img-back-portfolio whiteout' text='SONOMA SUMMER HOUSE'/>
-        <img src="/images//portfolio/4/portfolio_11.jpg" class='img-back-portfolio whiteout' id='img-back-portfolio-last' text='NORTH BAY COTTAGE' onload="sequentialFade('.img-back-portfolio',500)"/>
+        <img src="/images//portfolio/4/portfolio_11.jpg" class='img-back-portfolio whiteout' id='img-back-portfolio-last' text="FISHERMAN'S COTTAGE" onload="sequentialFade('.img-back-portfolio',500)"/>
     
     </div>
     

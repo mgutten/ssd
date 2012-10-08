@@ -32,7 +32,7 @@ $(function() {
 	//originalFontSize = originalBodWidth * 1/85;
 	//store original font size for body-text in ele
 	$('.body-text').each(function() {
-			this.originalFontSize = parseInt($(this).css('font-size'),10) * (originalBodWidth * 1/1200);
+			this.originalFontSize = parseInt($(this).css('font-size'),10) * (originalBodWidth * 1/1100);
 	})
 	
 	//store original margin of each element within the lower body section
@@ -97,11 +97,14 @@ $(function() {
 	
 	
 	//set container height and width for arrows
-	$('img:last').load(function() {
+	$(window).load(function() {
 		$('.arrow-container').each(function(){	
 			$(this).css('height', $('#body-lower').height() + 'px');
 		})
+		//hide last arrow onload
+		$('#last-arrow').hide()
 	});
+	
 	
 	/* animation effect for arrow clicks */
 	$('#next-arrow').click(function() {
@@ -148,12 +151,19 @@ $(function() {
 	*/
 	
 	/* whiteout effect for mouseover imgs */
-	$('.whiteout').hover(function() {
+	$('.whiteout,.whiteout-more').hover(function() {
 			
-			if(loadedFade === false)
+			if(loadedFade === false || running == true)
 				return;
+			
+			//OPACITY = .2 FOR PRESS PAGE and .3 for portfolio
+			var opacity = '.3';
+			
+			if($(this).is('.whiteout-more'))
+				opacity = '.2'
 				
-			$(this).stop().animate({'opacity':'.3'},600);
+			
+			$(this).stop().animate({'opacity':opacity},600);
 			
 			var height = $(this).height() + 'px';
 			var width = $(this).width() + 'px';
@@ -174,9 +184,10 @@ $(function() {
 									'display': 'block'
 								})
 								
-			$('.hover-text').html(text);
+			$('.hover-text').html(text)
 			
-			
+			//center text for press page
+			$('.hover-text-small').css('margin-top',-($('.hover-text-small').height()/2)+'px')
 							
 			
 		},
@@ -245,6 +256,8 @@ function animateSlide(nextOrLast, obj) {
 			return;
 		else
 			running = true;
+			
+		var marginLeft = parseInt($('#animate-outer-container').css('margin-left'),10);
 		
 		animateNumber += nextOrLast * -1;
 		
@@ -253,6 +266,39 @@ function animateSlide(nextOrLast, obj) {
 		var newMargin = (curMargin + width)  + 'px';
 		
 		obj.animate({'margin-left': newMargin}, 300);
+		
+		
+		
+		//if we are at the end of animation, stop scrolling
+		if(nextOrLast < 0){
+			//next arrow clicked
+			var limit = $('#animate-outer-container').width() - (2 * $('.animate-inner-container').width()) - 10;
+			
+			if(marginLeft <= (limit * -1)){
+				$('#next-arrow').hide();
+				$('#last-arrow').show();
+			}
+			else{
+				$('#next-arrow').show();
+				$('#last-arrow').show();
+			}
+			
+		}
+		else if(nextOrLast > 0){
+			//next arrow clicked
+			var limit = -$('.animate-inner-container').width() - 20;
+			
+			if(marginLeft >= limit){
+				$('#last-arrow').hide();
+				$('#next-arrow').show();
+			}
+			else{
+				$('#next-arrow').show();
+				$('#last-arrow').show();
+			}
+			
+		}
+				
 		
 		//reset animation after done
 		setTimeout(function() {
@@ -285,6 +331,11 @@ function textSize() {
 				
 				//calculate the new font size
 				var newFontSize =  $(this).prop('originalFontSize') + pixelsToIncrease;
+				
+				//lower limit for font size (11px) for about page
+				if(newFontSize < 11)
+					newFontSize = 11;
+				
  				
 				//set new font size
 				$(this).css("font-size", newFontSize + 'px');
@@ -300,7 +351,7 @@ function marginSize(applied_element,fixedMargin) {
 		//if img-back not loaded or fixedMargin is true, move element 
 		//according to proper img ratios
 		if(imgHeight == 0 || fixedMargin){
-			imgHeight = getOriginalHeightOfImg()
+			imgHeight = getOriginalHeightOfImg();
 		}
 				
 		var newMargin = originalMargin - imgHeight;

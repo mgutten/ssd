@@ -40,7 +40,12 @@ $(function() {
 		$('.hidden:last').attr('src',$('.hidden:last').attr('src'));
 		
 		animation = true;
-		$('.hidden:last').load(function() {
+		/*$('.hidden:last').load(function() {
+			textMove();
+		})
+		*/
+		
+		$(window).load(function() {
 			textMove();
 		})
 		
@@ -70,8 +75,8 @@ $(function() {
 //animate text
 function textMove() {
 		setTimeout(function() {
-				$('#animation-text1').animate({'margin-left':'200px'},6800);
-				$('#animation-text2').animate({'margin-left':'-2700px'},6800);
+				$('#animation-text1').animate({'margin-left':'300px'},6800);
+				$('#animation-text2').animate({'margin-left':'-2800px'},6800);
 			}, 500);
 		
 		setTimeout(function() {

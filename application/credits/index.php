@@ -18,23 +18,24 @@ $body->lower();
     
     	<p class='body-text text'>
        		PHOTOGRAPHERS:</br>
-</br></br>
-            ALEXANDRE BAILHACHE</br></br>
-            BILL HOLT</br></br>
-            DAVID DUNCAN LIVINGSTON</br></br>
-            DOMINIQUE VORILLON</br></br>
-            GILLES TRILLARD</br></br>
-            JEAN-FRANCOIS JUSSARD</br></br>
-            GREY CRAWFORD</br></br>
-            JEREMY SAMUELSON</br></br>
-            JON JENSEN</br></br>
-            JONN COOLIDGE</br></br>
-            LUCA TROVATO</br></br>
-            MELANIE ACEVEDO</br></br>
-            PHILIP HARVEY</br></br>
-            THIBAULT JEANSON</br></br>
-            TIM STREET-PORTER</br></br>
-            WILLIAM ABRONOWICZ</br></br>
+</br>
+			<span style='line-height:12px'>William Abronowicz</br></br>
+            Melanie Acevedo</br></br>
+            Alexandre Bailhache</br></br>
+            Jonn Coolidge</br></br>
+            Grey Crawford</br></br>
+            David Duncan Livingston</br></br>
+            Philip Harvey</br></br>
+            Bill Holt</br></br>
+            Thibault Jeanson</br></br>
+            Jon Jensen</br></br>
+            Jean-Francois Jussard</br></br>
+            Cesar Rubio</br></br>
+            Jeremy Samuelson</br></br>
+            Tim Street-Porter</br></br>
+            Gilles Trillard</br></br>
+            Luca Trovato</br></br>
+            Dominique Vorillon</br></br></span>
         </p>
         
 </div>
