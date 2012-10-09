@@ -6,12 +6,17 @@ class General {
 	var $url = array('contact'=>'/contact',
 						'credits'=>'/credits',
 						'products'=>'/products',
-						'video'=>'/video',
+						'video'=>'/about/video',
 						'press'=>'/press',
 						'portfolio'=>'/portfolio',
+						'by project'=>'/portfolio',
+						'by room'=>'/portfolio/room',
 						'about'=>'/about',
+						'us'=>'/about',
+						'travel'=>'/about/travel',
 						'home'=>'/');
-	
+						
+							
 }
 
 class Head extends General {
@@ -144,10 +149,14 @@ class Navigation extends General {
 	var $navigation = array('contact',
 								'credits',
 								'products',
-								'video',
 								'press',
-								'portfolio',
-								'about'
+								'portfolio'=>array('portfolio',
+													'by project',
+													'by room'),
+								'about'=>array('about',
+												'us',
+												'travel',
+												'video')
 								);
 	
 	//return image location for logo
@@ -163,25 +172,45 @@ class Navigation extends General {
 		LOCATIONS ARE STORED IN "GENERAL" CLASS
 	*/
 	function nav($nav_array) {
-		
+				
 		$block = '';
 		
 		if(is_array($nav_array)){
+			
+			//hack to access key of array (use count = 0 where array[0] is main name of dropdown
+			$count = 0;
+			foreach($nav_array as $val) {
 				
-				$count = 0;
-			foreach($nav_array as $key=>$val){
-					$class = 'text nav';
-					
-					//if current page is in this navigation, bold nav
-					if(strpos($_SERVER['PHP_SELF'],$key) !== false)
-						$class .= '-bold';
-					
-					if($count == 0)
-						$block .= '<div class="{$class}" id="nav-{$key}">' . strtoupper($key) . '</div>\n';
+				$class = 'text nav';
+				
+				//if current page is in this navigation, bold nav
+				if(strpos($_SERVER['PHP_SELF'],$val) !== false)
+					$class .= '-bold';
+				
+				//first round through open dropdown containers
+				if($count == 0){
+					$block .= "<a href='" . $this->url[$val] . "' class='{$class} dropdown' id='nav-{$val}'>" . strtoupper($val) . "</a>";
 						
-					$block .= ''; //INSERT DROPDOWN BREAKDOWN HERE
-					
+					$block .= "<div class='dropdown-outer'>
+									<div class='dropdown-inner' id='$val'>";	
+									
+					$count++;
+					continue;
+				}
+				
+				$class = 'nav-dropdown nav';
+				
+				//if currently on this page for dropdown
+				if($_SERVER['REQUEST_URI'] == $this->url[$val])
+					$class .= '-bold';	
+												
+				$block .= "<a href='" . $this->url[$val] . "' class='$class'>" . strtoupper($val) . "</a>";
+						
+				
 			}
+			
+			$block .= "</div></div>";
+			
 			
 			return $block;
 		}
@@ -203,7 +232,7 @@ class Navigation extends General {
 		echo "<a href='" . $this->url['home'] . "'><img src='" . $this->logo() . "' id='logo' /></a>\n";
 		
 		foreach($this->navigation as $val) {
-			
+				
 				echo $this->nav($val);
 		}
 		

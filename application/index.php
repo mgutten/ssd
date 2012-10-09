@@ -14,7 +14,7 @@ $body = new Body();
 $body->lower();
 
 //cancel animation if already seen it
-if(strpos($_SERVER['HTTP_REFERER'],'stephenshubel') > -1 )
+if(strpos($_SERVER['HTTP_REFERER'],'stephenshubel') !== false )
 	echo "<span id='animation-clearance' class='nope'></span>";
 ?>
 

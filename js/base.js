@@ -20,6 +20,12 @@ var loadedFade = false;
 //var to be used to keep track of what img fades next in portfolio page
 var fadeOffset = 0;
 
+//is the img expanding
+var sliding = false;
+
+//are you viewing a press/project fullscreen
+var viewing = false;
+
 
 $(function() {
 	
@@ -37,7 +43,7 @@ $(function() {
 	
 	//store original margin of each element within the lower body section
 	$('#body-lower').children().each(function() {
-		this.originalMargin = parseInt($(this).css('margin-top'),10)
+			this.originalMargin = parseInt($(this).css('margin-top'),10)
 	})
 	
 	//adjust text size and positioning onload
@@ -46,7 +52,7 @@ $(function() {
 	/*IE BUG where onload does not always fire, used to move video-play-button onload in IE */
 	marginSize($('.margin-resize'));
 	
- 
+
  
  	/* deal with img resize and window resize */
     $(window).resize(function() {
@@ -56,28 +62,95 @@ $(function() {
 		marginSize($('.margin-resize'));
 		animateMarginSize();
 		
-		//navigation alignment TO BE CHANGED WHEN VIDEO IS REMOVED----------
+		/* NAVIGATION */
 		if($(window).width() < 1150){
 			$('.nav,.nav-bold').css('margin-right','8px')
-			$('#nav-contact').css('margin-right','19px')
 		}
 		else{
-			$('.nav,.nav-bold').css('margin-right','15px')
-			$('#nav-contact').css('margin-right','19px')
+			$('.nav,.nav-bold').css('margin-right',$(this).attr('originalMarginRight') + 'px')
 
 		}
     })
+		
+	//store original nav margin-right
+	$('.nav,.nav-bold').each(function() {
+		this.originalMarginRight = parseInt($(this).css('margin-right'),10)
+	});
 	
-		//navigation alignment TO BE CHANGED WHEN VIDEO IS REMOVED----------
-		if($(window).width() < 1150){
-			$('.nav,.nav-bold').css('margin-right','8px')
-			$('#nav-contact').css('margin-right','19px')
-		}
-		else{
-			$('.nav,.nav-bold').css('margin-right','15px')
-			$('#nav-contact').css('margin-right','19px')
+	//navigation alignment TO BE CHANGED WHEN VIDEO IS REMOVED----------
+	if($(window).width() < 1150){
+		$('.nav,.nav-bold').css('margin-right','8px')
+	}
+	else{
+		$('.nav,.nav-bold').css('margin-right',$(this).attr('originalMarginRight') + 'px')
 
-		}
+	}
+	
+	
+	
+	
+	/* DROPDOWNS */
+	
+	$('.dropdown-inner').each(function() {
+		//how many dropdown navs
+		var children = $(this).children().length;
+		//how tall is each nav times num of children plus top padding
+		var height = ($(this).children().innerHeight() * children) + 10;
+		
+		this.innerHeight = height;
+		
+		//move inner dropdown to hidden
+		$(this).css('margin-top',-$(this).prop('innerHeight') + 'px')
+		
+		
+		//portfolio dropdown center inner navigation titles since they are wider
+		if($(this).is('#portfolio'))
+			$(this).children('.nav,.nav-bold').css('padding-left','10px');
+		
+		
+		var id = $(this).attr('id');
+		var parent_ele = $('#nav-' + id);
+		var top = parent_ele.offset().top + $('.nav').height();
+		var left = parent_ele.offset().left;
+		
+		$(this).parent().css({'top': top,
+							'left': left});
+		
+	});
+	
+	/*hover effect for dropdowns on mouseover*/
+	$(".dropdown,.dropdown-inner").hover(
+	
+		function() {
+			var ele;
+			if($(this).is('.dropdown-inner'))
+				ele = $(this);
+			else
+				ele = $(this).next('.dropdown-outer').children('.dropdown-inner');
+				
+				
+			ele.stop().animate({'margin-top':'0px'},300);
+		},
+		function() {
+			var ele;
+			if($(this).is('.dropdown-inner'))
+				ele = $(this);
+			else
+				ele = $(this).next('.dropdown-outer').children('.dropdown-inner');
+				
+				
+			var height = ele.prop('innerHeight');
+			
+			
+			ele.stop().animate({'margin-top': -height + 'px'},300);
+						
+				
+	})
+
+	
+	
+	
+	
 	
 	//move hidden home img behind shown img on page load
 	$('.margin-resize').one('load',function() {
@@ -103,6 +176,7 @@ $(function() {
 		})
 		//hide last arrow onload
 		$('#last-arrow').hide()
+		
 	});
 	
 	
@@ -110,6 +184,13 @@ $(function() {
 	$('#next-arrow').click(function() {
 		//set limit for how far scrolling can go
 		var limit = $('#animate-outer-container').width() - $('.animate-inner-container').width() -10;
+		
+		//if viewing the sub-tree of project/articles
+		if(viewing){
+			animateSlide(-1,$('.animate-slide-outer'));
+			return;
+		}
+			
 		
 		//if we are at the end of animation, stop scrolling
 		if(parseInt($('#animate-outer-container').css('margin-left'),10) <= (limit * -1))
@@ -119,6 +200,13 @@ $(function() {
 	});
 	
 	$('#last-arrow').click(function() {
+		
+		//if viewing the sub-tree of project/articles
+		if(viewing){
+			animateSlide(1,$('.animate-slide-outer'));
+			return;
+		}
+		
 		
 		if(parseInt($('#animate-outer-container').css('margin-left'),10) >= 0)
 			return;
@@ -130,7 +218,7 @@ $(function() {
 
 
 
-	/* sequential fade effect for portfolio 
+	/* sequential fade effect for portfolio (DISABLED) onload event in html instead
 	$('#img-back-portfolio-last').load(function() {
 			
 			sequentialFade('.img-back-portfolio',500)
@@ -150,67 +238,8 @@ $(function() {
 	}
 	*/
 	
-	/* whiteout effect for mouseover imgs */
-	$('.whiteout,.whiteout-more').hover(function() {
-			
-			if(loadedFade === false || running == true)
-				return;
-			
-			//OPACITY = .2 FOR PRESS PAGE and .3 for portfolio
-			var opacity = '.3';
-			
-			if($(this).is('.whiteout-more'))
-				opacity = '.2'
-				
-			
-			$(this).stop().animate({'opacity':opacity},600);
-			
-			var height = $(this).height() + 'px';
-			var width = $(this).width() + 'px';
-			var top = $(this).offset().top + 'px';
-			var left = $(this).offset().left + 'px';
-			var text = $(this).attr('text');
-			
-			//adjust for the right-most column of press page so text can be centered on image 
-			//(img hangs over to next page)
-			if($(this).is('.last-column'))
-				width = parseInt(width,10) - 10 + 'px';
-
-			
-			$('#hover-text').css({'height': height,
-									'width': width,
-									'top': top,
-									'left': left,
-									'display': 'block'
-								})
-								
-			$('.hover-text').html(text)
-			
-			//center text for press page
-			$('.hover-text-small').css('margin-top',-($('.hover-text-small').height()/2)+'px')
-							
-			
-		},
-		function() {
-			
-			if(loadedFade === false)
-				return;
-			
-			$(this).stop().animate({'opacity':'1'},600);
-			$('#hover-text').hide();
-	})
 	
-	/*
-	$('.whiteout').click(function() {
-			
-			if(loadedFade === false)
-				return;
-				
-			$(this).css({'left':$(this).offset().left,
-						'position':'absolute'})
-					.animate({'left':'300px'},1000)
-	})
-	*/
+	
 	
 })
 
@@ -226,8 +255,8 @@ function sequentialFade(classes, speed) {
 		setTimeout(function() {
 				
 				//temp fix for portfolio arrows fade in
-				if(!ele.parent().is('#animate-inner-container1') && loadedFade == false){
-					//no longer need to hold off mouseover effects
+				if(!ele.parent().parent().is('#animate-inner-container1') && loadedFade == false){
+					//no longer need to hold off mouseover/click effects
 					loadedFade = true;
 					
 					if($('.arrow-container').height() < 300){
@@ -252,17 +281,73 @@ function animateSlide(nextOrLast, obj) {
 		
 		//test if animation is already running
 		//prevent multiple fires
-		if(running == true)
+		if(running)
 			return;
 		else
 			running = true;
 			
-		var marginLeft = parseInt($('#animate-outer-container').css('margin-left'),10);
+		var marginLeft = parseInt(obj.css('margin-left'),10);
 		
 		animateNumber += nextOrLast * -1;
 		
 		var curMargin = parseInt(obj.css('margin-left'),10);
-		var width = (obj.children('.animate-inner-container').width() + 1) * nextOrLast;
+		var width = (obj.children().width() + 1) * nextOrLast;
+		var newMargin = (curMargin + width)  + 'px';
+		
+		obj.animate({'margin-left': newMargin}, 300);
+		
+		//if we are at the end of animation, stop scrolling
+		if(nextOrLast < 0){
+			//next arrow clicked
+			var limit = $('#animate-outer-container').width() - (2 * $('.animate-inner-container').width()) - 10;
+			
+			if(marginLeft <= (limit * -1)){
+				$('#next-arrow').hide();
+				$('#last-arrow').show();
+			}
+			else{
+				$('#next-arrow').show();
+				$('#last-arrow').show();
+			}
+			
+		}
+		else if(nextOrLast > 0){
+			//next arrow clicked
+			var limit = -$('.animate-inner-container').width() - 20;
+			
+			if(marginLeft >= limit){
+				$('#last-arrow').hide();
+				$('#next-arrow').show();
+			}
+			else{
+				$('#next-arrow').show();
+				$('#last-arrow').show();
+			}
+			
+		}
+				
+		
+		//reset animation after done
+		setTimeout(function() {
+				running = false;
+			}, 450);
+}
+/*
+function animateSlide(nextOrLast, obj) {
+		
+		//test if animation is already running
+		//prevent multiple fires
+		if(running)
+			return;
+		else
+			running = true;
+			
+		var marginLeft = parseInt(obj.css('margin-left'),10);
+		
+		animateNumber += nextOrLast * -1;
+		
+		var curMargin = parseInt(obj.css('margin-left'),10);
+		var width = (obj.children().width() + 1) * nextOrLast;
 		var newMargin = (curMargin + width)  + 'px';
 		
 		obj.animate({'margin-left': newMargin}, 300);
@@ -305,6 +390,8 @@ function animateSlide(nextOrLast, obj) {
 				running = false;
 			}, 450);
 }
+*/
+
 
 function animateMarginSize() {
 		var newMargin = $('.animate-inner-container').width() * (animateNumber - 1) * -1;
