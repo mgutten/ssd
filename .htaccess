@@ -26,5 +26,5 @@ RewriteCond %{REQUEST_URI}  portfolio
 RewriteRule ^(.*)/(\d+)$ $1/index.php?page=$2 [L]
 
 
-php_value auto_prepend_file "X:/Program Files (x86)/wamp/www/Local_site/ssd/includes/head.php"
+#php_value auto_prepend_file "X:/Program Files (x86)/wamp/www/Local_site/ssd/includes/head.php"
 

@@ -44,9 +44,9 @@
 	position:absolute;
 	top:50%;
 	left:50%;
-	margin:-25px 0px 0px -200px;
+	margin:-15px 0px 0px -175px;
 	opacity:0;
 	filter:alpha(opacity=0);
 	height:auto;
-	width:400px;
+	width:350px;
 }

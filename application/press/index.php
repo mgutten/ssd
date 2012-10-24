@@ -9,16 +9,15 @@ $head->close();
 $body = new Body('true');
 $body->lower();
 ?>
-
 <div id='animate-outer-container' class='animate-outer-container-press'>
 
 	<div id='animate-inner-container1' class='animate-inner-container-press animate-inner-container'>
 
         <div class='img-back-press-container'><img src="/images/press/Press_cover_01.jpg" class='img-back img-back-press whiteout-more whiteout' text='BE YOUR OWN DECORATOR</br>MARCH 2012'/></div>
-        <div class='img-back-press-container'><img src="/images/press/Press_cover_02.jpg" class='img-back-press whiteout-more whiteout' text='COTE OUEST</br>OCT-NOV 2005'/></div>
+        <div class='img-back-press-container'><img src="/images/press/Press_cover_02.jpg" class='img-back-press whiteout-more whiteout' text='COTE OUEST</br>OCT/NOV 2005'/></div>
         <div class='img-back-press-container'><img src="/images/press/Press_cover_03.jpg" class='img-back-press whiteout-more whiteout' text='HOUSE BEAUTIFUL</br>APRIL 2011'/></div>
         <div class='img-back-press-container'><img src="/images/press/Press_cover_04.jpg" class='img-back-press whiteout-more whiteout' text='DESIGNERS HERE</BR>AND THERE</br>2010'/></div>
-        <div class='img-back-press-container'><img src="/images/press/Press_cover_05.jpg" class='img-back-press whiteout-more whiteout' text='ELLE DECOR</BR>FEB-MARCH 1999'/></div>
+        <div class='img-back-press-container'><img src="/images/press/Press_cover_05.jpg" class='img-back-press whiteout-more whiteout' text='ELLE DECOR</BR>FEB/MARCH 1999'/></div>
         <div class='img-back-press-container'><img src="/images/press/Press_cover_06.jpg" class='img-back-press whiteout-more whiteout' text='LE XVIII RETROUVE</BR>SEP 2006'/></div>
         <div class='img-back-press-container'><img src="/images/press/Press_cover_07.jpg" class='img-back-press whiteout-more whiteout' text='HOUSE AND GARDEN</BR>NOV 2004'/></div>
         <div class='img-back-press-container'><img src="/images/press/Press_cover_08.jpg" class='img-back-press whiteout-more last-column whiteout' text='CALIFORNIA INTERIORS</br>NOV 1999'/></div>
@@ -70,9 +69,12 @@ $body->lower();
     
 </div>
 
-<div class='animate-slide-outer'>
 
-</div>
+<?php
+
+$slideshow = new Slideshow();
+$slideshow->create();
+?>
 
 <div id='hover-text'>
 	<div class='hover-text text hover-text-small'>

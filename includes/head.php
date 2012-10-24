@@ -6,7 +6,7 @@ class General {
 	var $url = array('contact'=>'/contact',
 						'credits'=>'/credits',
 						'products'=>'/products',
-						'video'=>'/about/video',
+						'video'=>'/video',
 						'press'=>'/press',
 						'portfolio'=>'/portfolio',
 						'by project'=>'/portfolio',
@@ -145,18 +145,18 @@ class Head extends General {
 
 class Navigation extends General {
 	
-	var $logo = '/images/nav/logo.jpg';
+	var $logo = '/images/nav/logo.png';
 	var $navigation = array('contact',
 								'credits',
 								'products',
+								'video',
 								'press',
 								'portfolio'=>array('portfolio',
 													'by project',
 													'by room'),
 								'about'=>array('about',
 												'us',
-												'travel',
-												'video')
+												'travel')
 								);
 	
 	//return image location for logo
@@ -273,7 +273,7 @@ class Body extends General {
 			$prev = (is_dir($_SERVER['DOCUMENT_ROOT'] . '/images/portfolio/' . ($this->cur_url - 1)) ? $this->cur_url - 1 : 4);
 			*/
 			
-			echo "<img src='/images/arrows/last_arrow.jpg' id='last-arrow' />";
+			echo "<img src='/images/arrows/last_arrow.jpg' id='last-arrow' class='arrow' />";
 		}
 			
 		echo "</div>";
@@ -292,11 +292,13 @@ class Body extends General {
 		echo "<div class='arrow-container' id='next-arrow-container'>";
 		
 		if($this->arrows == 'true')
-			echo "<img src='/images/arrows/next_arrow.jpg' id='next-arrow' />";
+			echo "<img src='/images/arrows/next_arrow.jpg' id='next-arrow' class='arrow'/>";
 			
 		echo "</div>";
 		
 		echo "<span id='copyright' class='text'>&copy; " . date('Y') . " STEPHEN SHUBEL DESIGN, INC.</span>";
+		
+
 
 	}
 	
@@ -305,6 +307,20 @@ class Body extends General {
 		
 		$this->close();
 		
-		echo "</div></body>\n</html>";
+		echo "</div><div id='background'></div></body>\n</html>";
 	}
+}
+
+class Slideshow {
+	
+	function create() {
+		
+		echo "<div class='animate-slide-outermost'>
+					<div class='animate-slide-outer'>
+					</div>
+				</div>";
+				
+		echo "<div class='x'></div>";
+	}
+	
 }

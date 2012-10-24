@@ -14,6 +14,8 @@ if($handle = opendir($folder)){
 		
 }
 
+sort($files);
+
 
 echo json_encode($files);
 			

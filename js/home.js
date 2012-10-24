@@ -103,8 +103,8 @@ function moveLogo() {
 	var top = parseInt($('#logo').offset().top,10) - parseInt($('#animation-logo').css('margin-top'),10) + 'px';
 	var left = parseInt($('#logo').offset().left,10) - parseInt($('#animation-logo').css('margin-left'),10)  + 'px';
 	
-	$('#animation-logo').animate({'width':'350px',
-									'height':'30px',
+	$('#animation-logo').animate({//'width':'350px',
+									//'height':'30px',
 									'top':top,
 									'left':left}, 3000);
 									

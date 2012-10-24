@@ -33,7 +33,7 @@ if(strpos($_SERVER['HTTP_REFERER'],'stephenshubel') !== false )
 
 </div>
 
-<img src='/images/nav/logo.jpg' id='animation-logo' />
+<img src='/images/nav/logo.png' id='animation-logo' />
 
 <img src='/images/home/home_01.jpg' class='hidden' />
 <img src='/images/home/home_02.jpg' class='hidden' />

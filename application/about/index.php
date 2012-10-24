@@ -28,7 +28,7 @@ $body->lower();
             Shubel's interiors are honest and livable.</br></br>
             
             In 2011, House Beautiful honored Shubel with inclusion in its Roots of American Design, a milestone project highlighting the lineage of significant American designers 
-            from the eighteenth-century to present day.
+            from the nineteenth-century to present day.
         </p>
         
     </div>

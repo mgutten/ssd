@@ -26,6 +26,15 @@ var sliding = false;
 //are you viewing a press/project fullscreen
 var viewing = false;
 
+//find the slide position and number
+var numMainSlides;
+var numSecondarySlides;
+var curMainSlide = 1;
+var curSecondarySlide = 1;
+
+var timeout;
+
+
 
 $(function() {
 	
@@ -63,13 +72,8 @@ $(function() {
 		animateMarginSize();
 		
 		/* NAVIGATION */
-		if($(window).width() < 1150){
-			$('.nav,.nav-bold').css('margin-right','8px')
-		}
-		else{
-			$('.nav,.nav-bold').css('margin-right',$(this).attr('originalMarginRight') + 'px')
-
-		}
+		navResize();
+		dropdownResize();
     })
 		
 	//store original nav margin-right
@@ -77,14 +81,7 @@ $(function() {
 		this.originalMarginRight = parseInt($(this).css('margin-right'),10)
 	});
 	
-	//navigation alignment TO BE CHANGED WHEN VIDEO IS REMOVED----------
-	if($(window).width() < 1150){
-		$('.nav,.nav-bold').css('margin-right','8px')
-	}
-	else{
-		$('.nav,.nav-bold').css('margin-right',$(this).attr('originalMarginRight') + 'px')
-
-	}
+	navResize();
 	
 	
 	
@@ -100,7 +97,7 @@ $(function() {
 		this.innerHeight = height;
 		
 		//move inner dropdown to hidden
-		$(this).css('margin-top',-$(this).prop('innerHeight') + 'px')
+		$(this).css('margin-top',-$(this).prop('innerHeight') + 'px');
 		
 		
 		//portfolio dropdown center inner navigation titles since they are wider
@@ -108,13 +105,7 @@ $(function() {
 			$(this).children('.nav,.nav-bold').css('padding-left','10px');
 		
 		
-		var id = $(this).attr('id');
-		var parent_ele = $('#nav-' + id);
-		var top = parent_ele.offset().top + $('.nav').height();
-		var left = parent_ele.offset().left;
-		
-		$(this).parent().css({'top': top,
-							'left': left});
+		dropdownResize();
 		
 	});
 	
@@ -140,7 +131,6 @@ $(function() {
 				
 				
 			var height = ele.prop('innerHeight');
-			
 			
 			ele.stop().animate({'margin-top': -height + 'px'},300);
 						
@@ -171,38 +161,54 @@ $(function() {
 	
 	//set container height and width for arrows
 	$(window).load(function() {
+		
 		$('.arrow-container').each(function(){	
 			$(this).css('height', $('#body-lower').height() + 'px');
 		})
 		//hide last arrow onload
-		$('#last-arrow').hide()
+		//$('#last-arrow').hide()
 		
 	});
+	
+	
 	
 	
 	/* animation effect for arrow clicks */
 	$('#next-arrow').click(function() {
 		//set limit for how far scrolling can go
-		var limit = $('#animate-outer-container').width() - $('.animate-inner-container').width() -10;
+		var limit;
 		
 		//if viewing the sub-tree of project/articles
 		if(viewing){
+			
+			//prevent overshoot animation
+			limit = $('.animate-slide-outer').width() - $('.animate-slide-inner').width() -10;
+			if(parseInt($('.animate-slide-outer').css('margin-left'),10) <= (limit * -1))
+				return;
+			
 			animateSlide(-1,$('.animate-slide-outer'));
 			return;
 		}
-			
 		
+		
+		limit = $('#animate-outer-container').width() - $('.animate-inner-container').width() -10;
 		//if we are at the end of animation, stop scrolling
 		if(parseInt($('#animate-outer-container').css('margin-left'),10) <= (limit * -1))
 			return;
+		
 		
 		animateSlide(-1,$('#animate-outer-container'));
 	});
 	
 	$('#last-arrow').click(function() {
+
 		
 		//if viewing the sub-tree of project/articles
 		if(viewing){
+			
+			if(parseInt($('.animate-slide-outer').css('margin-left'),10) >= 0)
+				return;
+				
 			animateSlide(1,$('.animate-slide-outer'));
 			return;
 		}
@@ -211,9 +217,34 @@ $(function() {
 		if(parseInt($('#animate-outer-container').css('margin-left'),10) >= 0)
 			return;
 		
+
 		animateSlide(1,$('#animate-outer-container'));
 		
 	});
+	
+	
+	
+	$(document).keydown(function (e) {
+		  var keyCode = e.keyCode || e.which,
+			  arrow = {left: 37, up: 38, right: 39, down: 40 };
+		
+		  switch (keyCode) {
+			case arrow.left:
+			  $('#last-arrow').trigger('click');
+			break;
+			case arrow.right:
+			  $('#next-arrow').trigger('click');
+
+			break;
+			case arrow.up:
+			  //..
+			break;
+
+			case arrow.down:
+			  //..
+			break;
+		  }
+		});
 	
 
 
@@ -244,36 +275,80 @@ $(function() {
 })
 
 
-function sequentialFade(classes, speed) {
+function dropdownResize() {
+		$('.dropdown-inner').each(function() {		
+		
+			var id = $(this).attr('id');
+			var parent_ele = $('#nav-' + id);
+			var top = parent_ele.offset().top + $('.nav').height();
+			var left = parent_ele.offset().left;
+			var width = $(this).width();
+			
+			if($(this).is('#about')){
+				left -= 8;
+				width -= 10;
+			}
+			
+			
+			$(this).parent().css({'top': top,
+								'left': left,
+								'width': width});
+			
+		});
+}
+		
+
+function navResize() {
 	
+	
+	//navigation alignment TO BE CHANGED WHEN VIDEO IS REMOVED----------
+	if($(window).width() < 1180){
+		$('.nav,.nav-bold').css('margin-right','8px')
+		$('#nav-contact').css('margin-right','36px');
+	}
+	else{
+		
+		$('.nav,.nav-bold').each(function() {
+			$(this).css('margin-right',$(this).prop('originalMarginRight') + 'px')
+		})
+	}
+}
+
+	
+
+
+function sequentialFade(classes, speed) {
+		
 		var ele = $(classes + ':eq(' + fadeOffset + ')');
 		
 		ele.animate({'opacity': '1'}, speed);
 		
 		var delay = speed/2;
 		
-		setTimeout(function() {
+		timeout = setTimeout(function() {
 				
-				//temp fix for portfolio arrows fade in
-				if(!ele.parent().parent().is('#animate-inner-container1') && loadedFade == false){
-					//no longer need to hold off mouseover/click effects
-					loadedFade = true;
-					
-					if($('.arrow-container').height() < 300){
-							var height = ($('.img-back').height() < 300 ? ($('.img-back').height() * 3) : $('.img-back').height());
-							$('.arrow-container').css('height',height)
-					}
-					$('.arrow-container').animate({'opacity':'1'},500);
-
-				}
-				
-				//if last ele of that class, no more fades
-				if(ele.is(classes + ':last'))
-					return;
-				
-				fadeOffset++;
-				sequentialFade(classes, speed);
-		},delay)
+						//temp fix for portfolio arrows fade in
+						if(!ele.parent().parent().is('#animate-inner-container1') && loadedFade == false || ele.is(classes + ':last')){
+							//no longer need to hold off mouseover/click effects
+							loadedFade = true;
+							
+							if($('.arrow-container').height() < 300){
+									var height = ($('.img-back').height() < 300 ? ($('.img-back').height() * 3) : $('.img-back').height());
+									$('.arrow-container').css('height',height)
+							}
+							
+							if($('.animate-inner-container').length > 1)
+								$('.arrow-container').animate({'opacity':'1'},500);
+		
+						}
+						
+						//if last ele of that class, no more fades
+						if(ele.is(classes + ':last'))
+							return;
+						
+						fadeOffset++;
+						sequentialFade(classes, speed);
+				},delay)
 		
 }
 
@@ -285,21 +360,24 @@ function animateSlide(nextOrLast, obj) {
 			return;
 		else
 			running = true;
-			
+		
+		
 		var marginLeft = parseInt(obj.css('margin-left'),10);
 		
-		animateNumber += nextOrLast * -1;
+		//animateNumber += nextOrLast * -1;
 		
 		var curMargin = parseInt(obj.css('margin-left'),10);
 		var width = (obj.children().width() + 1) * nextOrLast;
 		var newMargin = (curMargin + width)  + 'px';
 		
-		obj.animate({'margin-left': newMargin}, 300);
+		obj.animate({'margin-left': newMargin}, {duration:300,complete:function() {
+																		running = false}});
 		
 		//if we are at the end of animation, stop scrolling
 		if(nextOrLast < 0){
+			/*
 			//next arrow clicked
-			var limit = $('#animate-outer-container').width() - (2 * $('.animate-inner-container').width()) - 10;
+			var limit = obj.width() - (2 * obj.children().width()) - 10;
 			
 			if(marginLeft <= (limit * -1)){
 				$('#next-arrow').hide();
@@ -309,10 +387,24 @@ function animateSlide(nextOrLast, obj) {
 				$('#next-arrow').show();
 				$('#last-arrow').show();
 			}
-			
+			*/
+			//change current slide used in page indicator
+			var secondOrMain;
+			if(obj.is('#animate-outer-container')){
+				curMainSlide += 1;
+				secondOrMain = 'main';
+			}
+			else{
+				curSecondarySlide += 1;
+				secondOrMain = 'second';
+			}
+				
+			changeIndicator(secondOrMain);	
+				
 		}
 		else if(nextOrLast > 0){
-			//next arrow clicked
+			/*
+			//last arrow clicked
 			var limit = -$('.animate-inner-container').width() - 20;
 			
 			if(marginLeft >= limit){
@@ -323,15 +415,23 @@ function animateSlide(nextOrLast, obj) {
 				$('#next-arrow').show();
 				$('#last-arrow').show();
 			}
-			
-		}
+			*/
+			//change current slide used in page indicator
+			var secondOrMain;
+			if(obj.is('#animate-outer-container')){
+				curMainSlide -= 1;
+				secondOrMain = 'main';
+			}
+			else{
+				curSecondarySlide -= 1;
+				secondOrMain = 'second';
+			}
 				
+			changeIndicator(secondOrMain);	
+		}
 		
-		//reset animation after done
-		setTimeout(function() {
-				running = false;
-			}, 450);
 }
+	
 /*
 function animateSlide(nextOrLast, obj) {
 		
@@ -394,9 +494,12 @@ function animateSlide(nextOrLast, obj) {
 
 
 function animateMarginSize() {
-		var newMargin = $('.animate-inner-container').width() * (animateNumber - 1) * -1;
+	
+		var animateNum = Math.round(parseInt($('#animate-outer-container').css('margin-left'),10)/$('.animate-inner-container').width());
+		var newMargin = $('.animate-inner-container').width() * (animateNum) * -1;
 		
 		$('#animate-outer-container').css('margin-left', newMargin);
+		
 }
 		
 
@@ -449,7 +552,7 @@ function marginSize(applied_element,fixedMargin) {
 		//since press img is 1/3 of total img height (3 press images per column)
 		if($('.img-back').height() < ($('#body-lower').height()/2))
 			imgHeight = $('.img-back').height() * 3;
-					
+		
 		//change height of arrow divs on either side
 		$('.arrow-container').css('height', imgHeight + 'px');
 				
