@@ -111,6 +111,9 @@ $(function() {
 		
 		//check arrows to be shown or not
 		testArrows();
+		
+		//turn off cartouche 
+		closeCartouche();
 	})
 	
 	
@@ -124,10 +127,103 @@ $(function() {
 		else
 			change = $('.indicator').index(this) - (curMainSlide - 1);
 			
+		$('#cartouche').hide();
+			
 		customAnimateSlide(change);
 				
 		//$(this).parent().siblings('.arrow').trigger('click');
 	});
+	
+	
+	
+	$('#cartouche-close').click(function() {
+		
+		closeCartouche();
+	})
+	
+	
+	
+	
+	/* arrow effects */
+		/* animation effect for arrow clicks */
+	$('#next-arrow').click(function() {
+		//set limit for how far scrolling can go
+		var limit;
+		
+		//if viewing the sub-tree of project/articles
+		if(viewing){
+			
+			//prevent overshoot animation
+			limit = $('.animate-slide-outer').width() - $('.animate-slide-inner').width() -10;
+			if(parseInt($('.animate-slide-outer').css('margin-left'),10) <= (limit * -1))
+				return;
+			
+			//close cartouche on portfolio page
+			closeCartouche(true);
+
+			
+			animateSlide(-1,$('.animate-slide-outer'));
+			return;
+			
+		}
+		
+		
+		limit = $('#animate-outer-container').width() - $('.animate-inner-container').width() -10;
+		//if we are at the end of animation, stop scrolling
+		if(parseInt($('#animate-outer-container').css('margin-left'),10) <= (limit * -1))
+			return;
+		
+		
+		animateSlide(-1,$('#animate-outer-container'));
+	});
+	
+	$('#last-arrow').click(function() {
+
+		
+		//if viewing the sub-tree of project/articles
+		if(viewing){
+			
+			if(parseInt($('.animate-slide-outer').css('margin-left'),10) >= 0)
+				return;
+				
+			animateSlide(1,$('.animate-slide-outer'));
+			return;
+		}
+		
+		
+		if(parseInt($('#animate-outer-container').css('margin-left'),10) >= 0)
+			return;
+		
+
+		animateSlide(1,$('#animate-outer-container'));
+		
+	});
+	
+	
+	
+	$(document).keydown(function (e) {
+		  var keyCode = e.keyCode || e.which,
+			  arrow = {left: 37, up: 38, right: 39, down: 40 };
+		
+		  switch (keyCode) {
+			case arrow.left:
+			  $('#last-arrow').trigger('click');
+			break;
+			case arrow.right:
+			  $('#next-arrow').trigger('click');
+
+			break;
+			case arrow.up:
+			  //..
+			break;
+
+			case arrow.down:
+			  //..
+			break;
+		  }
+		});
+
+	
 	
 
 	/* changes made on window load */
@@ -146,7 +242,26 @@ $(function() {
 		resize();
 	})
 	
+
+	
 });
+
+
+//value for slide is true or false
+function closeCartouche(slide) {
+	
+	$('#cartouche').animate({'opacity': '0'}, 
+							{duration:200,
+								queue:false,
+								complete:function() {
+									$(this).hide()
+									}
+				})
+	
+	if(slide)
+		$('#cartouche').animate({'left': $('#body-lower').offset().left - 500},300)
+	
+}
 
 
 function resize() {
@@ -234,6 +349,90 @@ function customAnimateSlide(change) {
 	
 }
 
+
+function animateSlide(nextOrLast, obj) {
+		
+		//test if animation is already running
+		//prevent multiple fires
+		if(running)
+			return;
+		else
+			running = true;
+		
+		
+		var marginLeft = parseInt(obj.css('margin-left'),10);
+		
+		//animateNumber += nextOrLast * -1;
+		
+		var curMargin = parseInt(obj.css('margin-left'),10);
+		var width = (obj.children().width() + 1) * nextOrLast;
+		var newMargin = (curMargin + width)  + 'px';
+		
+		obj.animate({'margin-left': newMargin}, 
+					{duration:300,
+					complete:function() {
+								running = false
+							}
+					});
+		
+		//if we are at the end of animation, stop scrolling
+		if(nextOrLast < 0){
+			/*
+			//next arrow clicked
+			var limit = obj.width() - (2 * obj.children().width()) - 10;
+			
+			if(marginLeft <= (limit * -1)){
+				$('#next-arrow').hide();
+				$('#last-arrow').show();
+			}
+			else{
+				$('#next-arrow').show();
+				$('#last-arrow').show();
+			}
+			*/
+			//change current slide used in page indicator
+			var secondOrMain;
+			if(obj.is('#animate-outer-container')){
+				curMainSlide += 1;
+				secondOrMain = 'main';
+			}
+			else{
+				curSecondarySlide += 1;
+				secondOrMain = 'second';
+			}
+				
+			changeIndicator(secondOrMain);	
+				
+		}
+		else if(nextOrLast > 0){
+			/*
+			//last arrow clicked
+			var limit = -$('.animate-inner-container').width() - 20;
+			
+			if(marginLeft >= limit){
+				$('#last-arrow').hide();
+				$('#next-arrow').show();
+			}
+			else{
+				$('#next-arrow').show();
+				$('#last-arrow').show();
+			}
+			*/
+			//change current slide used in page indicator
+			var secondOrMain;
+			if(obj.is('#animate-outer-container')){
+				curMainSlide -= 1;
+				secondOrMain = 'main';
+			}
+			else{
+				curSecondarySlide -= 1;
+				secondOrMain = 'second';
+			}
+				
+			changeIndicator(secondOrMain);	
+		}
+		
+}
 
 
 function testArrows() {
@@ -359,7 +558,22 @@ function animateImgExpand(element) {
 		
 		//different animation effect for portfolio by project page
 		if(element.is('.img-back-portfolio')){
+			//hide background images and nav
 			$('.whiteout,.nav,.nav-bold,#logo,.img-back-portfolio').stop().animate({'opacity':'0'},{duration:100,queue:false});
+			
+			
+			//move cartouche
+			var top = $('#body-lower').offset().top + (($('#body-lower').height() - $('#cartouche').height())/2);
+			$('#cartouche').css({'top': top,
+									'left': '50%'});
+			
+			
+			//populate cartouche with text for this project
+			var text = $('.whiteout-selected').parent().next('.portfolio-text').html();
+			$('.cartouche-body').html(text);
+			$('.cartouche-title').html($('.whiteout-selected').attr('text'));
+			
+			$('#cartouche').show();
 			
 		}
 		else{
@@ -494,8 +708,12 @@ function displayImgs(fileArray) {
 	if($('.whiteout-selected').is('.img-back-portfolio')){
 		$('#animate-slide-inner-first').children('.img-view').load(function() {
 			setTimeout(function() {
+				//fade in first image and cartouche
 				$('#animate-slide-inner-first').animate({'opacity': '1'}, 1500);
+				$('#cartouche').animate({'opacity': '.9'}, 1000);
+				//show x and clickable "exit" background
 				$('.x,#background').show();
+				//test whether arrows should appear or not
 				testArrows();
 			}, 100)
 		})
@@ -522,7 +740,7 @@ function displayImgs(fileArray) {
 	
 			
 			$(this).css('margin-left',left + 'px')
-			
+						
 
 		})
 	})

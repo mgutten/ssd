@@ -136,6 +136,11 @@ $(function() {
 						
 				
 	})
+	
+	
+	
+	
+	/*products page subscribe button*/
 
 	
 	
@@ -173,78 +178,6 @@ $(function() {
 	
 	
 	
-	/* animation effect for arrow clicks */
-	$('#next-arrow').click(function() {
-		//set limit for how far scrolling can go
-		var limit;
-		
-		//if viewing the sub-tree of project/articles
-		if(viewing){
-			
-			//prevent overshoot animation
-			limit = $('.animate-slide-outer').width() - $('.animate-slide-inner').width() -10;
-			if(parseInt($('.animate-slide-outer').css('margin-left'),10) <= (limit * -1))
-				return;
-			
-			animateSlide(-1,$('.animate-slide-outer'));
-			return;
-		}
-		
-		
-		limit = $('#animate-outer-container').width() - $('.animate-inner-container').width() -10;
-		//if we are at the end of animation, stop scrolling
-		if(parseInt($('#animate-outer-container').css('margin-left'),10) <= (limit * -1))
-			return;
-		
-		
-		animateSlide(-1,$('#animate-outer-container'));
-	});
-	
-	$('#last-arrow').click(function() {
-
-		
-		//if viewing the sub-tree of project/articles
-		if(viewing){
-			
-			if(parseInt($('.animate-slide-outer').css('margin-left'),10) >= 0)
-				return;
-				
-			animateSlide(1,$('.animate-slide-outer'));
-			return;
-		}
-		
-		
-		if(parseInt($('#animate-outer-container').css('margin-left'),10) >= 0)
-			return;
-		
-
-		animateSlide(1,$('#animate-outer-container'));
-		
-	});
-	
-	
-	
-	$(document).keydown(function (e) {
-		  var keyCode = e.keyCode || e.which,
-			  arrow = {left: 37, up: 38, right: 39, down: 40 };
-		
-		  switch (keyCode) {
-			case arrow.left:
-			  $('#last-arrow').trigger('click');
-			break;
-			case arrow.right:
-			  $('#next-arrow').trigger('click');
-
-			break;
-			case arrow.up:
-			  //..
-			break;
-
-			case arrow.down:
-			  //..
-			break;
-		  }
-		});
 	
 
 
@@ -352,145 +285,7 @@ function sequentialFade(classes, speed) {
 		
 }
 
-function animateSlide(nextOrLast, obj) {
-		
-		//test if animation is already running
-		//prevent multiple fires
-		if(running)
-			return;
-		else
-			running = true;
-		
-		
-		var marginLeft = parseInt(obj.css('margin-left'),10);
-		
-		//animateNumber += nextOrLast * -1;
-		
-		var curMargin = parseInt(obj.css('margin-left'),10);
-		var width = (obj.children().width() + 1) * nextOrLast;
-		var newMargin = (curMargin + width)  + 'px';
-		
-		obj.animate({'margin-left': newMargin}, {duration:300,complete:function() {
-																		running = false}});
-		
-		//if we are at the end of animation, stop scrolling
-		if(nextOrLast < 0){
-			/*
-			//next arrow clicked
-			var limit = obj.width() - (2 * obj.children().width()) - 10;
-			
-			if(marginLeft <= (limit * -1)){
-				$('#next-arrow').hide();
-				$('#last-arrow').show();
-			}
-			else{
-				$('#next-arrow').show();
-				$('#last-arrow').show();
-			}
-			*/
-			//change current slide used in page indicator
-			var secondOrMain;
-			if(obj.is('#animate-outer-container')){
-				curMainSlide += 1;
-				secondOrMain = 'main';
-			}
-			else{
-				curSecondarySlide += 1;
-				secondOrMain = 'second';
-			}
-				
-			changeIndicator(secondOrMain);	
-				
-		}
-		else if(nextOrLast > 0){
-			/*
-			//last arrow clicked
-			var limit = -$('.animate-inner-container').width() - 20;
-			
-			if(marginLeft >= limit){
-				$('#last-arrow').hide();
-				$('#next-arrow').show();
-			}
-			else{
-				$('#next-arrow').show();
-				$('#last-arrow').show();
-			}
-			*/
-			//change current slide used in page indicator
-			var secondOrMain;
-			if(obj.is('#animate-outer-container')){
-				curMainSlide -= 1;
-				secondOrMain = 'main';
-			}
-			else{
-				curSecondarySlide -= 1;
-				secondOrMain = 'second';
-			}
-				
-			changeIndicator(secondOrMain);	
-		}
-		
-}
 	
-/*
-function animateSlide(nextOrLast, obj) {
-		
-		//test if animation is already running
-		//prevent multiple fires
-		if(running)
-			return;
-		else
-			running = true;
-			
-		var marginLeft = parseInt(obj.css('margin-left'),10);
-		
-		animateNumber += nextOrLast * -1;
-		
-		var curMargin = parseInt(obj.css('margin-left'),10);
-		var width = (obj.children().width() + 1) * nextOrLast;
-		var newMargin = (curMargin + width)  + 'px';
-		
-		obj.animate({'margin-left': newMargin}, 300);
-		
-		
-		
-		//if we are at the end of animation, stop scrolling
-		if(nextOrLast < 0){
-			//next arrow clicked
-			var limit = $('#animate-outer-container').width() - (2 * $('.animate-inner-container').width()) - 10;
-			
-			if(marginLeft <= (limit * -1)){
-				$('#next-arrow').hide();
-				$('#last-arrow').show();
-			}
-			else{
-				$('#next-arrow').show();
-				$('#last-arrow').show();
-			}
-			
-		}
-		else if(nextOrLast > 0){
-			//next arrow clicked
-			var limit = -$('.animate-inner-container').width() - 20;
-			
-			if(marginLeft >= limit){
-				$('#last-arrow').hide();
-				$('#next-arrow').show();
-			}
-			else{
-				$('#next-arrow').show();
-				$('#last-arrow').show();
-			}
-			
-		}
-				
-		
-		//reset animation after done
-		setTimeout(function() {
-				running = false;
-			}, 450);
-}
-*/
 
 
 function animateMarginSize() {

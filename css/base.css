@@ -27,6 +27,7 @@ img {
 
 .underline {
 	text-decoration:none;
+	cursor:pointer;
 
 }
 
@@ -156,7 +157,7 @@ p {
 }
 
 #nav-contact {
-	margin-right:38px;
+	margin-right:40px;
 	width:75px;
 }
 
@@ -250,14 +251,6 @@ p {
 	background:none;
 }
 
-#products-text {
-	position:relative;
-	float:right;
-	width:25%;
-	margin:43% 32% 0px 0px;
-	background:none;
-	font-size: 14px;
-}
 
 #contact-text {
 	float:right;
@@ -384,6 +377,11 @@ p {
 	width:550px;
 	height:320px;
 	position:absolute;
+	left:50%;
+	margin-left:-275px;	
+	opacity:0;
+	z-index:200;
+	display:none;
 	background:url(/images/portfolio/cartouche.png);
 }
 
@@ -511,7 +509,7 @@ p {
 	float:left;
 	clear:both;
 	margin-top:0px;
-	padding:8px 0px 0px 20%;
+	padding:8px 0px 0px 15%;
 	text-align:left;
 	font-size:12px;
 	width:100%;
@@ -535,10 +533,43 @@ p {
 	position:relative;
 }
 
+/* products page */
+#products-container {
+	position:relative;
+	float:right;
+	width:39%;
+	height:auto;
+	margin:43% 25% 0px 0px;
+	background:#ff3;
+}
+
+#products-text {
+	position:relative;
+	float:right;
+	width:39%;
+	background:none;
+	margin:43% 25% 0px 0px;
+	font-size: 15px;
+	font-weight:bold;
+}
+
+.subscribe-container {
+	float:right;
+	clear:both;
+	position:relative;
+	width:220px;
+	height:100px;
+	margin:49% 37.3% 0px 0px;
+	background:#fff;
+}
+
+
 
 
 /*override general declarations */
 
 .red {
-	color:#B90000;
+	/*darker 
+	color:#B90000;*/
+	color:#F74104;
 }
