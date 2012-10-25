@@ -39,14 +39,17 @@ img {
 	display:none;
 }
 
+p {
+	cursor:default;
+	margin:0;
+}
+
 p.body-text {
 	margin: 3px;
 	color:#666;
 }
 
-p {
-	cursor:default;
-}
+
 
 .larger-text {
 	font-size:1.4em;
@@ -120,6 +123,7 @@ p {
 
 #body-lower {
 	width:94%;
+	position:relative;
 	height:auto;
 	float:left;
 	margin-top:15px;
@@ -208,9 +212,9 @@ p {
 }
 
 #home-img-hidden {
-	float:left;
-	clear:both;
-	margin-top:0px;
+	position:absolute;
+	top:0;
+	left:0;
 	width:100%;
 	height:auto;
 	
@@ -233,13 +237,17 @@ p {
 }
 
 #about-us-text {
-	float:right;
+	position:absolute;
+	top:2.5%;
+	right: 10%;
 	width:500px;
-	margin:2.5% 10% 0px 0px;
+	/*margin:2.5% 10% 0px 0px;*/
 	text-align:justify;
 	line-height:2em;
 	font-size:12px;
+
 }
+
 
 #video-text {
 	position:relative;
@@ -254,7 +262,7 @@ p {
 
 #contact-text {
 	float:right;
-	width:28%;
+	width:29%;
 	margin:20% 8% 0px 0px;
 	background:none;
 	font-size: 14px;
@@ -314,6 +322,10 @@ p {
 	filter:alpha(opacity=40);
 	cursor:pointer;
 	
+}
+
+.indicator:first-child {
+	padding-left:0px;
 }
 
 .indicator-selected {
@@ -477,22 +489,22 @@ p {
 /* video */
 
 #jwplayer {
-	float:left;
-	clear:both;
-	position:relative;
+	position:absolute;
+	top:0;
+	left:0;
 	z-index:-1;
 	display:none;
 }
 
 .video-play-button {
-	float:right;
-	position:relative;
+	position:absolute;
+	bottom:55%;
+	right:32%;
 	z-index:1;
 	width:5%;
 	opacity:.8;
 	filter:alpha(opacity=80);
 	height:auto;
-	margin:22% 32% 0px 0px;
 	cursor:pointer;
 }
 
@@ -535,38 +547,93 @@ p {
 
 /* products page */
 #products-container {
-	position:relative;
-	float:right;
-	width:39%;
+	position:absolute;
+	width:37%;
 	height:auto;
-	margin:43% 25% 0px 0px;
-	background:#ff3;
+	top:70%;
+	right:24%;
 }
 
 #products-text {
 	position:relative;
 	float:right;
-	width:39%;
+	width:100%;
 	background:none;
-	margin:43% 25% 0px 0px;
+	/*margin:43% 25% 0px 0px;
+	bottom:20%;
+	right:24%;*/
+	z-index:200;
 	font-size: 15px;
 	font-weight:bold;
 }
 
-.subscribe-container {
-	float:right;
+#subscribe-container {
+	float:left;
 	clear:both;
 	position:relative;
-	width:220px;
-	height:100px;
-	margin:49% 37.3% 0px 0px;
+	width:50%;
+	height:auto;
+	margin-left:20%;
 	background:#fff;
+	padding:5px;
+	display:none;
+	opacity:0;
+	filter:alpha(opacity=0);
+}
+
+.subscribe-input {
+	width: 60%;
+	float:right;
+	clear:none;
+	border:solid #000;
+	border-width: 0px 0px 1px 0px;
+	margin:0px 12% 0px 0px;
+	font-size:14px;
+}
+
+.subscribe-input-submit {
+	float:right;
+	clear:both;
+	width:60px;
+	height:20px;
+	margin:7px 12% 0px 0px;
+}
+
+.subscribe-inner-container {
+	float:left;
+	clear:both;
+	width:100%;
+	margin-top:3px;
+
+}
+
+.subscribe-inner-container p {
+	float:right;
+	margin:4px 0px 0px 0px;
+	font-size:14px;
+}
+
+#subscribe-success {
+	position:fixed;
+	top:50%;
+	left:50%;
+	width:300px;
+	height:auto;
+	background:#fff;
+	padding: 20px;
+	margin:-60px 0px 0px -150px;
+	text-align:center;
+	font-size:13px;
 }
 
 
 
-
 /*override general declarations */
+
+.red-back {
+	border:solid #F74104;
+	border-width: 0px 0px 1px 0px;
+}
 
 .red {
 	/*darker 

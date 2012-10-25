@@ -19,7 +19,7 @@ if(strpos($_SERVER['HTTP_REFERER'],'stephenshubel') !== false )
 ?>
 
 <img src='/images/home/home_01.jpg' id='home-img-shown' class='img-back'/>
-<img src='/images/home/home_04.jpg?<?php echo microtime(true);?>' id='home-img-hidden' class='img-back margin-resize'/>
+<img src='/images/home/home_04.jpg?<?php echo microtime(true);?>' id='home-img-hidden' class='img-back'/>
 
 <div id='animation-container' class='animation'>
 
@@ -44,9 +44,6 @@ if(strpos($_SERVER['HTTP_REFERER'],'stephenshubel') !== false )
 <img src='/images/home/home_07.jpg' class='hidden' />
 <img src='/images/home/home_08.jpg' class='hidden' />
 <img src='/images/home/home_09.jpg' class='hidden' />
-<img src='/images/home/home_10.jpg' class='hidden' onload="marginSize($('#home-img-hidden'))"/>
+<img src='/images/home/home_10.jpg' class='hidden' />
 
-<?php
 
-//set session so animation only happens when first come to site
-//$_SESSION['animation'] = true;

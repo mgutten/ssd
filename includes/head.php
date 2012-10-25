@@ -12,8 +12,6 @@ class General {
 						'by project'=>'/portfolio',
 						'by room'=>'/portfolio/room',
 						'about'=>'/about',
-						'us'=>'/about',
-						'travel'=>'/about/travel',
 						'home'=>'/');
 						
 							
@@ -154,9 +152,7 @@ class Navigation extends General {
 								'portfolio'=>array('portfolio',
 													'by project',
 													'by room'),
-								'about'=>array('about',
-												'us',
-												'travel')
+								'about'
 								);
 	
 	//return image location for logo

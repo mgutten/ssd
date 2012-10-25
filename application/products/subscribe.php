@@ -13,3 +13,5 @@ $db->insert('subscribers',array('id'=>'',
 									'subscribed'=>true));
 									
 $db->execute();
+
+header('location: /products?sub=true');

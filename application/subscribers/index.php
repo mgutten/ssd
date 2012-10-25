@@ -10,10 +10,39 @@ $db->select();
 
 $db->execute();
 
-echo "<div style='float:left;clear:both;width:150px;font-weight:bold'>NAME</div>";
-echo "<div style='float:left;font-weight:bold;'>EMAIL</div>";
+$subscribed = array();
+
+echo "<div style='float:left;clear:both;width:180px;font-weight:bold'>NAME</div>";
+echo "<div style='float:left;font-weight:bold;width:220px;'>EMAIL</div>";
+echo "<div style='float:left;font-weight:bold;'>SUBSCRIBED</div>";
 
 while($row = $db->result->fetch_array()){
-		echo "<div style='float:left;clear:both;width:150px'>" . $row['name'] . "</div>";
-		echo "<div style='float:left;'>" . $row['email'] . "</div>";
+		echo "<div style='float:left;clear:both;width:180px'>" . $row['name'] . "</div>";
+		echo "<div style='float:left;width:220px;'>" . $row['email'] . "</div>";
+		echo "<div style='float:left;'>" . ($row['subscribed'] > 0 ? 'Yes' : 'No') . "</div>";
+		
+		if($row['subscribed'] > 0)
+			array_push($subscribed,$row['email']);
 }
+?>
+
+
+<div style='float:left;clear:both;margin:30px 0px 0px 0px;width:500px;'>
+Copyable list of subscribed emails:
+</div>
+<div style='float:left;clear:both;margin:10px 0px 0px 0px;width:500px;'>
+
+<?php
+	foreach($subscribed as $val){
+		
+		echo $val;
+		
+		if($val == end($subscribed))
+			continue;
+		
+		echo ', ';
+	}
+	
+?>
+    
+</div>

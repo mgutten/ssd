@@ -30,6 +30,7 @@ $(function() {
 			
 		$('.animation,#animation-logo').hide();
 		$('.nav,.img-back,.nav-bold,#logo,#copyright').css({'opacity':'1'});
+
 		setFade();
 		
 	}
@@ -55,7 +56,7 @@ $(function() {
 	/* SAFARI AND IE FIX for jumping images on homepage */
 	if(navigator.userAgent.indexOf("Safari") > -1 ||
 			$.browser.msie){
-		marginSize($('#home-img-hidden'))
+		//marginSize($('#home-img-hidden'))
 	}
 	
 	//pause image scrolling while browser is elsewhere
@@ -87,13 +88,13 @@ function textMove() {
 //fade large center logo in 
 function fadeIn() {
 	
-	$('#animation-logo').animate({'opacity':'1'},700);
-	
-	setTimeout(function() {
-			
-			moveLogo();
-			
-		}, 1200);
+		$('#animation-logo').animate({'opacity':'1'},700);
+		
+		setTimeout(function() {
+				
+				moveLogo();
+				
+			}, 1200);
 		
 }
 
@@ -135,13 +136,12 @@ function fadeDocument() {
 function setFade() {
 	
 	timeout = setInterval(function() {
-					
 					imgFade();
 				}, 4000);
 }
 
 function imgFade() {
-	
+
 	animation = true;
 	
 	//fade out shown picture

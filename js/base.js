@@ -37,12 +37,11 @@ var timeout;
 
 
 $(function() {
-	
     //set the font size using jquery
     //$(".text").css("font-size", originalFontSize);
 	
-	//subtract 3% from body width to account for arrows on each side
-	originalBodWidth = 	.97 * $('#body').width();
+	//subtract 6% from body width to account for arrows on each side
+	originalBodWidth = 	.94 * $('#body').width();
 	
 	//originalFontSize = originalBodWidth * 1/85;
 	//store original font size for body-text in ele
@@ -57,23 +56,24 @@ $(function() {
 	
 	//adjust text size and positioning onload
 	textSize();
-	marginSize($('.body-text').parent());
+	//marginSize($('.body-text').parent());
 	/*IE BUG where onload does not always fire, used to move video-play-button onload in IE */
-	marginSize($('.margin-resize'));
+	//marginSize($('.margin-resize'));
 	
 
  
  	/* deal with img resize and window resize */
     $(window).resize(function() {
 		textSize();
-		marginSize($('.body-text').parent());
+		//marginSize($('.body-text').parent());
 		//moves top margin for home-img-hidden
-		marginSize($('.margin-resize'));
-		animateMarginSize();
+		//marginSize($('.margin-resize'));
+		animateMarginSize($('.animate-inner-container'));
 		
 		/* NAVIGATION */
 		navResize();
 		dropdownResize();
+		
     })
 		
 	//store original nav margin-right
@@ -104,10 +104,10 @@ $(function() {
 		if($(this).is('#portfolio'))
 			$(this).children('.nav,.nav-bold').css('padding-left','10px');
 		
-		
-		dropdownResize();
-		
+				
 	});
+	
+	
 	
 	/*hover effect for dropdowns on mouseover*/
 	$(".dropdown,.dropdown-inner").hover(
@@ -141,13 +141,25 @@ $(function() {
 	
 	
 	/*products page subscribe button*/
-
+	$('#subscribe').click(function() {
+		$('#subscribe-container').show();
+		
+		$('#subscribe-container').animate({'opacity': '1'},600);
+	});
 	
+	/* successful subscribe */
+	if($('#subscribe-success').length > 0){
+		$('#subscribe-success').click(function() {
+			$(this).hide();
+		})
+	}
+		
 	
 	
 	
 	
 	//move hidden home img behind shown img on page load
+	/*
 	$('.margin-resize').one('load',function() {
 			marginSize($('.margin-resize'));
 	});
@@ -170,8 +182,10 @@ $(function() {
 		$('.arrow-container').each(function(){	
 			$(this).css('height', $('#body-lower').height() + 'px');
 		})
-		//hide last arrow onload
-		//$('#last-arrow').hide()
+		
+		//fix bug where dropdown does not align onload
+		dropdownResize();
+
 		
 	});
 	
@@ -214,9 +228,11 @@ function dropdownResize() {
 			var id = $(this).attr('id');
 			var parent_ele = $('#nav-' + id);
 			var top = parent_ele.offset().top + $('.nav').height();
-			var left = parent_ele.offset().left;
+			var left = parent_ele.offset().left + 1;
 			var width = $(this).width();
 			
+			
+			//edits for about dropdown
 			if($(this).is('#about')){
 				left -= 8;
 				width -= 10;
@@ -288,12 +304,12 @@ function sequentialFade(classes, speed) {
 	
 
 
-function animateMarginSize() {
+function animateMarginSize(element) {
 	
-		var animateNum = Math.round(parseInt($('#animate-outer-container').css('margin-left'),10)/$('.animate-inner-container').width());
-		var newMargin = $('.animate-inner-container').width() * (animateNum) * -1;
+		var animateNum = Math.round(parseInt(element.parent().css('margin-left'),10)/element.width());
+		var newMargin = element.width() * (animateNum) * -1;
 		
-		$('#animate-outer-container').css('margin-left', newMargin);
+		element.parent().css('margin-left', newMargin);
 		
 }
 		
@@ -315,7 +331,7 @@ function textSize() {
 			$('.body-text').each(function() {
 				
 				//calculate the new font size
-				var newFontSize =  $(this).prop('originalFontSize') + pixelsToIncrease;
+				var newFontSize =  Math.floor($(this).prop('originalFontSize') + pixelsToIncrease);
 				
 				//lower limit for font size (11px) for about page
 				if(newFontSize < 11)
@@ -327,9 +343,9 @@ function textSize() {
 			})
 }
 
-function marginSize(applied_element,fixedMargin) {
+function marginSize(element,fixedMargin) {
 		
-		var originalMargin = (applied_element.prop('originalMargin') ? applied_element.prop('originalMargin') : 0);
+		var originalMargin = (element.prop('originalMargin') ? element.prop('originalMargin') : 0);
 		//var imgHeight = getOriginalHeightOfImg();
 		var imgHeight = $('.img-back').height();
 		
@@ -341,7 +357,7 @@ function marginSize(applied_element,fixedMargin) {
 				
 		var newMargin = originalMargin - imgHeight;
 	
-		applied_element.css('margin-top', newMargin + 'px');
+		element.css('margin-top', newMargin + 'px');
 						
 		//change arrow height to match the img height (press)
 		//since press img is 1/3 of total img height (3 press images per column)
@@ -361,3 +377,28 @@ function getOriginalHeightOfImg() {
 		return imgHeight;
 	
 }
+
+function validate(form_name) {	
+	
+	var returning = true;
+	
+	var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+	
+		$('#' + form_name + ' input[type=text]').each(function(){
+			
+			if($.trim($(this).val()) == '' ||
+				($(this).attr('name') == 'email' && !emailReg.test($(this).val()))){
+				
+				returning = false;
+				$(this).addClass('red-back');
+				
+			}
+		});
+				
+		if(!returning)
+			return false;
+		else
+			return true;
+		
+	
+}		

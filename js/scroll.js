@@ -15,6 +15,8 @@ $(function() {
 		//remove whiteout class so does not fade out
 		$(this).removeClass('whiteout').addClass('whiteout-selected');
 		
+		$('.animate-slide-outermost').show();
+		
 		animateImgExpand($(this));
 						
 	});
@@ -38,8 +40,8 @@ $(function() {
 			
 			var height = $(this).height() + 'px';
 			var width = $(this).width() + 'px';
-			var top = $(this).offset().top + 'px';
-			var left = $(this).offset().left + 'px';
+			var top = $(this).position().top;
+			var left = $(this).position().left + 'px';
 			var text = $(this).attr('text');
 			
 			
@@ -78,6 +80,9 @@ $(function() {
 	/* click on viewed img to exit out */
 	$('.x,#background').click(function() {
 		
+		//reset body-lower height
+		$('#body-lower').css('height',$('.animate-inner-container').height());
+
 			
 		//remove selected image class
 		$('.whiteout-selected').removeClass('whiteout-selected').addClass('whiteout');
@@ -95,11 +100,12 @@ $(function() {
 								.css('margin-left','0px');
 		
 		//move animate-slide behind 
-		$('.animate-slide-outermost').css('z-index','-1');
+		$('.animate-slide-outermost').css('z-index','-1')
+										.hide();
 		
 		//change background to clear
 		$('.animate-inner-container').css('background','none')
-		
+				
 		//reset indicators
 		pageIndicators('main');
 		
@@ -154,7 +160,11 @@ $(function() {
 		if(viewing){
 			
 			//prevent overshoot animation
-			limit = $('.animate-slide-outer').width() - $('.animate-slide-inner').width() -10;
+			limit = $('.animate-slide-outer').width() - $('.animate-slide-inner').width() - 40;
+			
+			if($('.whiteout-selected').is('.img-back-portfolio'))
+				limit -= $('.animate-slide-inner').width() ;
+								
 			if(parseInt($('.animate-slide-outer').css('margin-left'),10) <= (limit * -1))
 				return;
 			
@@ -268,12 +278,19 @@ function resize() {
 	
 	//resize arrow
 	var height;
-	if(viewing)
+	if(viewing){
+		$('#body-lower').css('height', $('.animate-slide-outer').height());
+
 		height = $('.animate-slide-outer').height();
-	else
+	}
+	else{
+		$('#body-lower').css('height','auto');
+		
 		height = $('#body-lower').height();
-	
+	}
+		
 	$('.arrow-container').css('height',height);
+	
 	
 	indicatorResize();
 	windowLoad();
@@ -291,22 +308,22 @@ function windowLoad() {
 		//set number of main slides as var
 		numMainSlides = $('.animate-inner-container').length;
 		
-				
 		var height = $('#body-lower').width() * 700/1200;
 		$('.animate-slide-outermost').css({'height': height, //$('#body-lower').css('height'),
 											'width': $('#body-lower').css('width'),
-											'top': $('#body-lower').offset().top,
-											'left': $('#body-lower').offset().left})
-		
+											'top': 0,
+											'left': 0})
+		if(!viewing)
+			$('.animate-slide-outermost').hide();
+											
 		$('.animate-slide-outer').css({'height': $('.animate-slide-outermost').height() + 'px',
 										'width': ($('.animate-inner-container').width() * 20) + 'px'})
 										
 
 											
 		//position x for exiting slideshow
-		var left = $('#body-lower').offset().left + $('#body-lower').width() - 20;
-		$('.x').css({'top': $('#body-lower').offset().top + 5,
-						'left': left});
+		$('.x').css({'top': 5,
+						'right': 5});
 		
 						
 }
@@ -327,7 +344,7 @@ function customAnimateSlide(change) {
 
 	//find new margin
 	var curMargin = parseInt(element.css('margin-left'),10);
-	var newMargin = curMargin - (change * (element.children().width() + 1));
+	var newMargin = curMargin - (change * (element.children().width()));
 		
 	//animate
 	element.animate({'margin-left': newMargin + 'px'},{duration:400,complete:function() {
@@ -350,7 +367,7 @@ function customAnimateSlide(change) {
 }
 
 
-function animateSlide(nextOrLast, obj) {
+function animateSlide(nextOrLast, element) {
 		
 		//test if animation is already running
 		//prevent multiple fires
@@ -360,15 +377,15 @@ function animateSlide(nextOrLast, obj) {
 			running = true;
 		
 		
-		var marginLeft = parseInt(obj.css('margin-left'),10);
+		var marginLeft = parseInt(element.css('margin-left'),10);
 		
 		//animateNumber += nextOrLast * -1;
 		
-		var curMargin = parseInt(obj.css('margin-left'),10);
-		var width = (obj.children().width() + 1) * nextOrLast;
+		var curMargin = parseInt(element.css('margin-left'),10);
+		var width = (element.children().width()) * nextOrLast;
 		var newMargin = (curMargin + width)  + 'px';
 		
-		obj.animate({'margin-left': newMargin}, 
+		element.animate({'margin-left': newMargin}, 
 					{duration:300,
 					complete:function() {
 								running = false
@@ -379,7 +396,7 @@ function animateSlide(nextOrLast, obj) {
 		if(nextOrLast < 0){
 			/*
 			//next arrow clicked
-			var limit = obj.width() - (2 * obj.children().width()) - 10;
+			var limit = element.width() - (2 * element.children().width()) - 10;
 			
 			if(marginLeft <= (limit * -1)){
 				$('#next-arrow').hide();
@@ -392,7 +409,7 @@ function animateSlide(nextOrLast, obj) {
 			*/
 			//change current slide used in page indicator
 			var secondOrMain;
-			if(obj.is('#animate-outer-container')){
+			if(element.is('#animate-outer-container')){
 				curMainSlide += 1;
 				secondOrMain = 'main';
 			}
@@ -420,7 +437,7 @@ function animateSlide(nextOrLast, obj) {
 			*/
 			//change current slide used in page indicator
 			var secondOrMain;
-			if(obj.is('#animate-outer-container')){
+			if(element.is('#animate-outer-container')){
 				curMainSlide -= 1;
 				secondOrMain = 'main';
 			}
@@ -546,7 +563,7 @@ function animateImgExpand(element) {
 		if(element.is('.whiteout-more')){
 			var imgRatio = element.width()/element.height();
 			//find left distance to center img
-			var left = ($(window).width() - (imgRatio * $('.animate-slide-outer').height()))/2;
+			var left = ($('#body-lower').width() - (imgRatio * $('.animate-slide-outer').height()))/2;
 		}
 		else
 			var left = ($(window).width() - (element.width()))/2;
@@ -563,7 +580,7 @@ function animateImgExpand(element) {
 			
 			
 			//move cartouche
-			var top = $('#body-lower').offset().top + (($('#body-lower').height() - $('#cartouche').height())/2);
+			var top = (($('#body-lower').height() - $('#cartouche').height())/2);
 			$('#cartouche').css({'top': top,
 									'left': '50%'});
 			
@@ -578,6 +595,8 @@ function animateImgExpand(element) {
 		}
 		else{
 			
+			$('#body-lower').css('height',$('.animate-slide-outer').height());
+			
 			$('.whiteout,.nav,.nav-bold,#logo').stop().animate({'opacity':'0'},{duration:600,queue:false});
 			
 								
@@ -586,11 +605,11 @@ function animateImgExpand(element) {
 			//at same time move to middle of screen
 			element.css({'height': element.css('height'),
 							'width': 'auto',
-							'top':element.offset().top,
-							'left':element.offset().left,
+							'top':element.parent().position().top,
+							'left':element.parent().position().left,
 							'position':'absolute'})
 					.animate({'left':left + 'px',
-								'top': $('#body-lower').offset().top,
+								'top': 0,
 								'height': $('.animate-slide-outer').height()
 								},{duration:1000,queue:false,complete: function() {
 									
@@ -725,7 +744,6 @@ function displayImgs(fileArray) {
 	
 	//change width of animate-slide-inner to match the width of viewing screen
 	$('.animate-slide-inner').css('width',$('#body-lower').css('width'));
-
 	
 	$('.img-view').each(function() {
 		

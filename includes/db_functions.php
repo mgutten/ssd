@@ -92,7 +92,7 @@ class Db {
 		}
 		
 		//prevent duplicate emails
-		$query .= ' ON DUPLICATE KEY UPDATE email = email;';
+		$query .= ' ON DUPLICATE KEY UPDATE name = "' . $column_array["name"] . '", subscribed = "1";';
 		
 		$this->query .= $query;
 
@@ -100,7 +100,7 @@ class Db {
 	
 	//select all subscribed people
 	function select() {
-		$query = 'SELECT * FROM `subscribers` WHERE subscribed = "1"';
+		$query = 'SELECT * FROM `subscribers`';
 		
 		$this->query = $query;
 	}
@@ -127,7 +127,7 @@ class Db {
 		}
 		*/
 		
-		$query .= '`subscribed` = false';
+		$query .= '`subscribed` = 0';
 		
 		$query .= ' WHERE email = "' . $email . '"';
 		
