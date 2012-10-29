@@ -1,5 +1,5 @@
 // portfolio and press javascript
-
+var loadingTimeout;
 
 $(function() {
 	
@@ -27,7 +27,7 @@ $(function() {
 				
 			if(loadedFade === false || running == true || sliding == true || viewing == true)
 				return;
-		
+			
 			
 			//OPACITY = .2 FOR PRESS PAGE and .3 for portfolio
 			var opacity = '.3';
@@ -83,7 +83,9 @@ $(function() {
 		//reset body-lower height
 		$('#body-lower').css('height',$('.animate-inner-container').height());
 
-			
+		//hide loading gif if not already hidden
+		$('.loading').hide();
+		
 		//remove selected image class
 		$('.whiteout-selected').removeClass('whiteout-selected').addClass('whiteout');
 		//show main slide
@@ -97,7 +99,8 @@ $(function() {
 		
 		//delete all imgs in animate-slide-outer, reset to starting point
 		$('.animate-slide-outer').html('')
-								.css('margin-left','0px');
+								.css({'margin-left':'0px',
+										'width':($('.animate-inner-container').width() * 30) + 'px'});
 		
 		//move animate-slide behind 
 		$('.animate-slide-outermost').css('z-index','-1')
@@ -156,17 +159,25 @@ $(function() {
 		//set limit for how far scrolling can go
 		var limit;
 		
+		if(loadingTimeout)
+			return;
+		
+		
 		//if viewing the sub-tree of project/articles
 		if(viewing){
 			
 			//prevent overshoot animation
-			limit = $('.animate-slide-outer').width() - $('.animate-slide-inner').width() - 40;
+			//1 extra pixel per slide due to margin-left overlap
+			limit = $('.animate-slide-outer').width() - $('.animate-slide-inner').width() - (1 *  $('.animate-slide-inner').length) - 5;
 			
-			if($('.whiteout-selected').is('.img-back-portfolio'))
-				limit -= $('.animate-slide-inner').width() ;
+			//subtract one animate slide inner from limit for portfolio due to one fewer slide
+			if($('.whiteout-selected').is('.img-back-portfolio,.img-back-room'))
+				limit -= $('.animate-slide-inner').width();
+				
 								
-			if(parseInt($('.animate-slide-outer').css('margin-left'),10) <= (limit * -1))
+			if((parseInt($('.animate-slide-outer').css('margin-left'),10) * -1) >= limit ){
 				return;
+			}
 			
 			//close cartouche on portfolio page
 			closeCartouche(true);
@@ -178,9 +189,10 @@ $(function() {
 		}
 		
 		
-		limit = $('#animate-outer-container').width() - $('.animate-inner-container').width() -10;
+		limit = $('#animate-outer-container').width() - $('.animate-inner-container').width() - (1 *  $('.animate-slide-inner').length) - 5;
+		
 		//if we are at the end of animation, stop scrolling
-		if(parseInt($('#animate-outer-container').css('margin-left'),10) <= (limit * -1))
+		if((parseInt($('#animate-outer-container').css('margin-left'),10) * -1) >= limit)
 			return;
 		
 		
@@ -188,7 +200,6 @@ $(function() {
 	});
 	
 	$('#last-arrow').click(function() {
-
 		
 		//if viewing the sub-tree of project/articles
 		if(viewing){
@@ -248,7 +259,6 @@ $(function() {
 	})
 	
 	$(window).resize(function() {
-	
 		resize();
 	})
 	
@@ -294,7 +304,69 @@ function resize() {
 	
 	indicatorResize();
 	windowLoad();
+	slideResize();
+	animateMarginSize($('.animate-inner-container'));
+
 }
+
+function slideResize() {
+	
+	if(!viewing)
+		return;
+		
+	//change width of animate-slide-inner to match the width of viewing screen
+	var width = $('#body-lower').width();
+	$('.animate-slide-inner').css('width',width);
+	
+	$('.img-view').each(function() {
+		
+		centerImg($(this));
+	})
+	
+
+	//change width of animate outer to exactly match number of pictures
+	//so animateSlide works properly
+	var marginLeft = ($('.indicator.indicator-selected').index() * width) * -1;	
+	
+	width = ($('#body-lower').width() * ($('.animate-slide-inner').length)) + (1 * $('.animate-slide-inner').length);
+	
+	if($('.whiteout-selected').is('.img-back-portfolio,.img-back-room'))
+		width += $('.animate-slide-inner').width();
+	
+	$('.animate-slide-outer').css({'width': width,
+									'margin-left': marginLeft});
+}
+
+function indicatorResize() {
+		
+		/*
+		//find margin top for indicator container based on next-arrow height (should be below middle arrow so minus 20)
+		//var marginTop = (($('#next-arrow-container').height()/2) - 10) * -1 + 'px';
+		$('#indicator-container').css({'margin-top': marginTop,
+										'width': $('#next-arrow-container').width()})
+		
+		//center indicators
+										
+		var marginLeft = Math.floor(($('#next-arrow-container').width() - $('.indicator').width())/2);	
+		$('.indicator').css('margin-left', marginLeft);
+		*/
+		
+		var marginLeft = ($('#body').width() - $('#indicator-container').width())/2;
+				
+		$('#indicator-container').css('margin-left', marginLeft);
+}
+
+
+function animateMarginSize(element) {
+		var animateNum = Math.round(parseInt(element.parent().css('margin-left'),10)/element.width());
+		var newMargin = (element.width() * (animateNum)) - (animateNum * 1);
+		var width = element.length * $('#body-lower').width();		
+		
+		element.parent().css({'margin-left': newMargin,
+								'width': width});
+								
+}
+
 
 
 //alignment and sizing function for window.load and window.resize
@@ -315,9 +387,11 @@ function windowLoad() {
 											'left': 0})
 		if(!viewing)
 			$('.animate-slide-outermost').hide();
-											
+		
+		//*30 gives us our starting width of about 30 slides, which should not be exceeded.  if there are more than 30 pics,
+		//up the multiply to a higher number
 		$('.animate-slide-outer').css({'height': $('.animate-slide-outermost').height() + 'px',
-										'width': ($('.animate-inner-container').width() * 20) + 'px'})
+										'width': ($('.animate-inner-container').width() * 30) + 'px'})
 										
 
 											
@@ -325,7 +399,14 @@ function windowLoad() {
 		$('.x').css({'top': 5,
 						'right': 5});
 		
-						
+		/* fix problem where first container for press and by rooms page is sometimes larger than child img */
+		$('.img-back-room-container:first,.img-back-press-container:first').each(function() {
+			
+			if($(this).height() > $(this).children().height())
+				$(this).css('height', $(this).children().height())
+				
+		})
+		
 }
 
 //change = # of slides to change
@@ -459,9 +540,9 @@ function testArrows() {
 	
 
 	if(element.length > 1)
-		$('.arrow-container').animate({'opacity':'1'},400)
+		$('.arrow-container').animate({'opacity':'1'},400).children().css('cursor','pointer');
 	else
-		$('.arrow-container').css('opacity','0')
+		$('.arrow-container').css('opacity','0').children().css('cursor','default');
 		
 }
 	
@@ -512,25 +593,6 @@ function pageIndicators(secondOrMain) {
 		
 }
 
-function indicatorResize() {
-		
-		/*
-		//find margin top for indicator container based on next-arrow height (should be below middle arrow so minus 20)
-		//var marginTop = (($('#next-arrow-container').height()/2) - 10) * -1 + 'px';
-		$('#indicator-container').css({'margin-top': marginTop,
-										'width': $('#next-arrow-container').width()})
-		
-		//center indicators
-										
-		var marginLeft = Math.floor(($('#next-arrow-container').width() - $('.indicator').width())/2);	
-		$('.indicator').css('margin-left', marginLeft);
-		*/
-		
-		var marginLeft = ($('#body').width() - $('#indicator-container').width())/2;
-				
-		$('#indicator-container').css('margin-left', marginLeft);
-}
-
 
 //secondOrMain is str with val = 'main' or = 'second'
 function changeIndicator(secondOrMain) {
@@ -573,11 +635,23 @@ function animateImgExpand(element) {
 		//change background color #fffbef
 		//$('.animate-inner-container').css('background','#000')
 		
-		//different animation effect for portfolio by project page
-		if(element.is('.img-back-portfolio')){
+		//different animation effect for portfolio by project and by room page
+		if(element.is('.img-back-portfolio,.img-back-room')){
 			//hide background images and nav
-			$('.whiteout,.nav,.nav-bold,#logo,.img-back-portfolio').stop().animate({'opacity':'0'},{duration:100,queue:false});
-			
+			$('.whiteout,.whiteout-more,.nav,.nav-bold,#logo,.img-back-portfolio').stop()
+																					.animate({'opacity':'0'},
+																						{duration:100,
+																						queue:false,
+																						complete: function() {
+																								if(!loadingTimeout){
+																									loadingTimeout = setTimeout(function() {
+																										$('.loading').show().animate({'opacity':'1'},400);
+																									}, 300)
+																								}
+																								
+																						}
+																					});
+
 			
 			//move cartouche
 			var top = (($('#body-lower').height() - $('#cartouche').height())/2);
@@ -599,6 +673,8 @@ function animateImgExpand(element) {
 			
 			$('.whiteout,.nav,.nav-bold,#logo').stop().animate({'opacity':'0'},{duration:600,queue:false});
 			
+			if(!loadingTimeout)
+				loadingTimeout = true;
 								
 			//animate img to full opacity
 			element.stop().animate({'opacity':'1'},{duration:600,queue:false});
@@ -614,13 +690,16 @@ function animateImgExpand(element) {
 								},{duration:1000,queue:false,complete: function() {
 									
 										//on complete of animate, fade in copy of first image
-										$('#animate-slide-inner-first').css('opacity','1')
-										element.css({'opacity':'0',
+										setTimeout(function() {
+											$('#animate-slide-inner-first').css('opacity','1')
+											element.css({'opacity':'0',
 														'position':'static',
 														'width':'100%',
 														'height': 'auto'})
-										$('.x,#background').show();
-										testArrows();
+											$('.x,#background').show();
+											testArrows();
+											loadingTimeout = false;
+										},500)
 										
 										
 														
@@ -630,6 +709,7 @@ function animateImgExpand(element) {
 							
 		//animate arrows to same size as element
 		setTimeout(function() {
+			
 			$('.arrow-container').animate({'height':$('.animate-slide-outer').height()},600)
 			
 			//for when indicators are on side arrows
@@ -684,10 +764,11 @@ function loadImgs(src) {
 function displayImgs(fileArray) {
 	
 	var block;
+	var timestamp = ($.browser.msie ? '?' + new Date().getTime() : '');
 	
 	//if there are no inner imgs, display cover img again
 	if(fileArray.length == 0){
-		block = "<div class='animate-slide-inner animate-slide' id='animate-slide-inner-first'><img src='" + $('.whiteout-selected').attr('src') + "' class='img-view' /></div>";
+		block = "<div class='animate-slide-inner animate-slide' id='animate-slide-inner-first'><img src='" + $('.whiteout-selected').attr('src') + timestamp + "' class='img-view' /></div>";
 		$('.animate-slide-outer').append(block);
 	}
 	else{
@@ -696,15 +777,15 @@ function displayImgs(fileArray) {
 				//if first iteration
 				if(i == 0){
 					//and not portfolio page
-					if(!$('.whiteout-selected').is('.img-back-portfolio')){
+					if(!$('.whiteout-selected').is('.img-back-portfolio,.img-back-room')){
 						//first page is cover img
-						block = "<div class='animate-slide-inner animate-slide' id='animate-slide-inner-first'><img src='" + $('.whiteout-selected').attr('src') + "' class='img-view' /></div>"
+						block = "<div class='animate-slide-inner animate-slide' id='animate-slide-inner-first'><img src='" + $('.whiteout-selected').attr('src') + timestamp + "' class='img-view' /></div>"
 					}
 					//else it is portfolio by project page
 					else{
 						
 						//display first image of project
-						block = "<div class='animate-slide-inner animate-slide' id='animate-slide-inner-first'><img src='" + fileArray[i] + "' class='img-view' /></div>"
+						block = "<div class='animate-slide-inner animate-slide' id='animate-slide-inner-first'><img src='" + fileArray[i] + timestamp + "' class='img-view' /></div>"
 						$('.animate-slide-outer').append(block);
 						continue;
 					}
@@ -714,7 +795,7 @@ function displayImgs(fileArray) {
 				else
 					block = "";
 				
-				block += "<div class='animate-slide-inner animate-slide'><img src='" + fileArray[i] + "' class='img-view' /></div>";
+				block += "<div class='animate-slide-inner animate-slide'><img src='" + fileArray[i] + timestamp + "' class='img-view' /></div>";
 				
 				
 				$('.animate-slide-outer').append(block);
@@ -724,9 +805,22 @@ function displayImgs(fileArray) {
 	
 	
 	//animate first image in onload for by project
-	if($('.whiteout-selected').is('.img-back-portfolio')){
-		$('#animate-slide-inner-first').children('.img-view').load(function() {
+	if($('.whiteout-selected').is('.img-back-portfolio,.img-back-room')){
+		$('.img-view:last').load(function() {
+
 			setTimeout(function() {
+				
+				//clear loading gif timeout or hide it
+				if(loadingTimeout){
+					clearTimeout(loadingTimeout);
+				}
+				
+				loadingTimeout = false;
+				
+				
+				$('.loading').stop().css('opacity','1').hide()
+				
+				
 				//fade in first image and cartouche
 				$('#animate-slide-inner-first').animate({'opacity': '1'}, 1500);
 				$('#cartouche').animate({'opacity': '.9'}, 1000);
@@ -742,33 +836,25 @@ function displayImgs(fileArray) {
 									'height': $('#body-lower').css('height')});
 	*/
 	
-	//change width of animate-slide-inner to match the width of viewing screen
-	$('.animate-slide-inner').css('width',$('#body-lower').css('width'));
 	
 	$('.img-view').each(function() {
 		
 		$(this).load(function() {
 			
-			if($(this).is('.img-view-first')){
-				$(this).css('opacity','0');
-				return;
-			}
-			
-			var left = ($('#body-lower').width() - ($(this).width()))/2;
-	
-			
-			$(this).css('margin-left',left + 'px')
-						
+			centerImg($(this));
 
 		})
 	})
+	
+	//change width of animate-slide-inner to match the width of viewing screen
+	$('.animate-slide-inner').css('width',$('#body-lower').css('width'));
 	
 	//change width of animate outer to exactly match number of pictures
 	//so animateSlide on base.js works properly
 	setTimeout(function() {
 				
 				/* IF ISSUES ARISE FOR ARROWS DISAPPEARING BEFORE END OF SLIDESHOW, LOOK TO THE LAST PART OF THIS VAR AS THE CULPRIT */
-				var width = ($('.animate-slide-outermost').width() * (fileArray.length + 1)) + (1 * fileArray.length);
+				var width = ($('.animate-slide-inner').width() * (fileArray.length + 1)) + (1 * fileArray.length);
 				$('.animate-slide-outer').css('width', width);
 				
 				
@@ -785,6 +871,20 @@ function displayImgs(fileArray) {
 	
 	
 }
-		
-		
 
+
+function centerImg(element) {
+				
+			if(element.is('.img-view-first')){
+				element.css('opacity','0');
+				return;
+			}
+			
+			var left = ($('#body-lower').width() - (element.width()))/2;
+	
+			
+			element.css('margin-left',left + 'px')
+						
+
+}
+		

@@ -39,3 +39,5 @@ $slideshow->create();
     
     </div>
 </div>
+
+<img src='/images/loading/loader.gif' class='hidden loading' />

@@ -2,11 +2,18 @@
 
 class Db {
 	
+	/* test environment */
 	var $username = 'root';
 	var $password = '';
 	var $db = 'ssd';
+	
+	/* production environment
+	var $username = 'stephe80_ssd';
+	var $password = '1950cocolulu';
+	var $db = 'stephe80_ssd';*/
 	var $con;
 	var $query;
+	var $num_rows;
 	
 	function __construct() {
 			//set paths from bootstrap.php
@@ -144,7 +151,7 @@ class Db {
 			$this->result = $this->con->multi_query($this->query);
 		else
 			$this->result = $this->con->query($this->query);
-		
+				
 		$this->query = '';
 		
 	}	

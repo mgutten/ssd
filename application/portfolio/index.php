@@ -34,7 +34,7 @@ $body->lower();
 
         <div class='img-back-portfolio-container'><img src="/images/portfolio/portfolio_04.jpg" class='img-back-portfolio whiteout' text="PARIS PIED-&Aacute-TERRE"/></div>
         <span class='hidden portfolio-text'>
-        This Marais district pied–à–terre, just steps from the Place des Vosges, is over 400 years old.  It has been transformed into a luxurious warehouse perfect for travel decompression and antique 
+        This Marais district pied-&aacute;-terre, just steps from the Place des Vosges, is over 400 years old.  It has been transformed into a luxurious warehouse perfect for travel decompression and antique 
         storage.  The atelier functions as a design studio, living room, dining room, and bedroom. The tiny 400-square-foot space also functions as a showroom for flea market treasures coming and going 
         with every sale.  
         </span>
@@ -67,7 +67,7 @@ $body->lower();
         
         <div class='img-back-portfolio-container'><img src="/images/portfolio/portfolio_09.jpg" class='img-back-portfolio whiteout' text='PIEDMONT MANOR'/></div>
         <span class='hidden portfolio-text'>
-        Built in the 1920's by Albert Farr, this Bay Area residence was remodeled for the 21st century.  The décor and design were influenced by the lavish gardens and existing architecture.  The house is 
+        Built in the 1920's by Albert Farr, this Bay Area residence was remodeled for the 21st century.  The d&eacute;cor and design were influenced by the lavish gardens and existing architecture.  The house is 
         Mediterranean on the outside and Parisian indoors with furniture and finishes in peaceful hues of greens and yellows. It has a sense of formality yet is light and open, perfect for a young and vibrant family.
         </span>        
         
@@ -78,15 +78,15 @@ $body->lower();
         <div class='img-back-portfolio-container'><img src="/images/portfolio/portfolio_10.jpg" class='img-back-portfolio whiteout' text='SAN FRANCISCO LOFT'/></div>
         <span class='hidden portfolio-text'>
         This South of Market loft is located in a modern building near the San Francisco Design Center.  The clean white lines of the loft space provide a blank canvas for a 
-        mix of contemporary and classic décor accented with antiques.  The design transformed the plain brown box into an impressively sophisticated Parisian influenced space.
+        mix of contemporary and classic d&eacute;cor accented with antiques.  The design transformed the plain brown box into an impressively sophisticated Parisian influenced space.
         </span>        
         
-        <div class='img-back-portfolio-container'><img src="/images/portfolio/portfolio_12.jpg" class='img-back-portfolio whiteout' text='SONOMA SUMMER HOUSE'/></div>
+        <div class='img-back-portfolio-container'><img src="/images/portfolio/portfolio_11.jpg" class='img-back-portfolio whiteout' text='SONOMA SUMMER HOUSE'/></div>
         <span class='hidden portfolio-text'>
-        Calming periwinkle is the signature hue of this Sonoma weekend vacation house.  The cool, soothing, and sophisticated décor provide the prefect place to retreat and relax from bustling San Francisco. 
+        Calming periwinkle is the signature hue of this Sonoma weekend vacation house.  The cool, soothing, and sophisticated d&eacute;cor provide the prefect place to retreat and relax from bustling San Francisco. 
         </span>        
         
-        <div class='img-back-portfolio-container'><img src="/images/portfolio/portfolio_11.jpg" class='img-back-portfolio whiteout' id='img-back-portfolio-last' text="FISHERMAN'S COTTAGE" 
+        <div class='img-back-portfolio-container'><img src="/images/portfolio/portfolio_12.jpg" class='img-back-portfolio whiteout' id='img-back-portfolio-last' text="FISHERMAN'S COTTAGE" 
         onload="sequentialFade('.img-back-portfolio',500)"/></div>
         <span class='hidden portfolio-text'>
         Nautical memorabilia and gilded treasures float swimmingly in the sea of white painted redwood paneling. Also, the all white palette lends itself well to being a laboratory for new color and d&eacutecor experiments. 
@@ -119,4 +119,6 @@ $slideshow->create();
 	<div class='hover-text text'>
     </div>
 </div>
+
+<img src='/images/loading/loader.gif' class='hidden loading' />
 

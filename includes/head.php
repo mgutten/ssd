@@ -69,9 +69,9 @@ class Head extends General {
 								
 								
 								if($pos===false)
-									return "<link rel='stylesheet' href='/css/" . $value . ".css' media='screen' />\n";
+									return "<link rel='stylesheet' href='/css/" . $value . ".css?1.0' media='screen' />\n";
 								else
-									return "<link rel='stylesheet' href='".$value.".css' media='screen' />\n";
+									return "<link rel='stylesheet' href='".$value.".css?1.0' media='screen' />\n";
 								
 								
 						}
@@ -82,9 +82,9 @@ class Head extends General {
 						//test if this is an external link
 						$pos = strpos($style_array,'http');
 							if($pos===false)
-									return "<link rel='stylesheet' href='/css/" . $style_array . ".css' media='screen' />\n";
+									return "<link rel='stylesheet' href='/css/" . $style_array . ".css?1.0' media='screen' />\n";
 								else
-									return "<link rel='stylesheet' href='" . $style_array . ".css' media='screen' />\n";
+									return "<link rel='stylesheet' href='" . $style_array . ".css?1.0' media='screen' />\n";
 				}
 				
 		}
@@ -105,9 +105,9 @@ class Head extends General {
 								$pos = strpos($value,'http');
 								
 								if($pos===false)
-									$block .= "<script type='text/javascript' src='/js/".$value.".js'></script>\n";
+									$block .= "<script type='text/javascript' src='/js/".$value.".js?1.0'></script>\n";
 								else
-									$block .= "<script type='text/javascript' src='" . $value . ".js'></script>\n";
+									$block .= "<script type='text/javascript' src='" . $value . ".js?1.0'></script>\n";
 															
 						}
 				}
@@ -118,9 +118,9 @@ class Head extends General {
 						$script_array = str_replace(' ','_',$script_array);
 						
 						if($pos===false)
-								$block .= "<script type='text/javascript' src='/js/".$script_array.".js'></script>\n";
+								$block .= "<script type='text/javascript' src='/js/".$script_array.".js?1.0'></script>\n";
 						else
-								$block .= " <script type='text/javascript' src='".$script_array.".js'></script>\n";
+								$block .= " <script type='text/javascript' src='".$script_array.".js?1.0'></script>\n";
 				}
 				
 				return $block;
@@ -243,6 +243,7 @@ class Body extends General {
 	
 	//default value is false where there are no arrows, so fill space with empty div
 	var $arrows = false;
+	var $closed = false;
 	
 	//initiate body and create navigation
 	function __construct($arrows = false) {
@@ -294,6 +295,8 @@ class Body extends General {
 		
 		echo "<span id='copyright' class='text'>&copy; " . date('Y') . " STEPHEN SHUBEL DESIGN, INC.</span>";
 		
+		$this->closed = true;
+		
 
 
 	}
@@ -301,7 +304,9 @@ class Body extends General {
 	//on page destruct, close body tag and html tag
 	function __destruct() {
 		
-		$this->close();
+		//if body hasn't been closed yet
+		if(!$this->closed)
+			$this->close();
 		
 		echo "</div><div id='background'></div></body>\n</html>";
 	}

@@ -41,7 +41,7 @@ $(function() {
     //$(".text").css("font-size", originalFontSize);
 	
 	//subtract 6% from body width to account for arrows on each side
-	originalBodWidth = 	.94 * $('#body').width();
+	originalBodWidth = 	$('#body-lower').width();
 	
 	//originalFontSize = originalBodWidth * 1/85;
 	//store original font size for body-text in ele
@@ -68,7 +68,6 @@ $(function() {
 		//marginSize($('.body-text').parent());
 		//moves top margin for home-img-hidden
 		//marginSize($('.margin-resize'));
-		animateMarginSize($('.animate-inner-container'));
 		
 		/* NAVIGATION */
 		navResize();
@@ -87,6 +86,17 @@ $(function() {
 	
 	
 	/* DROPDOWNS */
+	
+	//prevent default click action for portfolio dropdown so can
+	//select dropdown options
+	if(isiPhone()){
+		
+		$('#nav-portfolio').click(function() {
+				return false;
+		});
+	}
+		
+	
 	
 	$('.dropdown-inner').each(function() {
 		//how many dropdown navs
@@ -175,6 +185,9 @@ $(function() {
 	
 	
 	
+	//rerun dropdown resize for IE onload cache bug and while page is loading the dropdown should
+	//match with "portfolio" nav
+	dropdownResize();
 	
 	//set container height and width for arrows
 	$(window).load(function() {
@@ -183,7 +196,7 @@ $(function() {
 			$(this).css('height', $('#body-lower').height() + 'px');
 		})
 		
-		//fix bug where dropdown does not align onload
+		//fix bug for chrome/webkit where dropdown does not align onload
 		dropdownResize();
 
 		
@@ -218,9 +231,17 @@ $(function() {
 	
 	
 	
-	
 })
 
+
+function isiPhone(){
+    return (
+        //Detect iPhone
+        (navigator.platform.indexOf("iPhone") != -1) ||
+        //Detect iPod
+        (navigator.platform.indexOf("iPad") != -1)
+    );
+}
 
 function dropdownResize() {
 		$('.dropdown-inner').each(function() {		
@@ -242,6 +263,11 @@ function dropdownResize() {
 			$(this).parent().css({'top': top,
 								'left': left,
 								'width': width});
+			
+			$(this).show().children().show();
+
+								
+			
 			
 		});
 }
@@ -276,7 +302,7 @@ function sequentialFade(classes, speed) {
 		
 		timeout = setTimeout(function() {
 				
-						//temp fix for portfolio arrows fade in
+						//fix for portfolio arrows fade in
 						if(!ele.parent().parent().is('#animate-inner-container1') && loadedFade == false || ele.is(classes + ':last')){
 							//no longer need to hold off mouseover/click effects
 							loadedFade = true;
@@ -286,8 +312,7 @@ function sequentialFade(classes, speed) {
 									$('.arrow-container').css('height',height)
 							}
 							
-							if($('.animate-inner-container').length > 1)
-								$('.arrow-container').animate({'opacity':'1'},500);
+							testArrows();
 		
 						}
 						
@@ -299,20 +324,7 @@ function sequentialFade(classes, speed) {
 						sequentialFade(classes, speed);
 				},delay)
 		
-}
-
-	
-
-
-function animateMarginSize(element) {
-	
-		var animateNum = Math.round(parseInt(element.parent().css('margin-left'),10)/element.width());
-		var newMargin = element.width() * (animateNum) * -1;
-		
-		element.parent().css('margin-left', newMargin);
-		
-}
-		
+}		
 
 
 function textSize() {
@@ -344,7 +356,6 @@ function textSize() {
 }
 
 function marginSize(element,fixedMargin) {
-		
 		var originalMargin = (element.prop('originalMargin') ? element.prop('originalMargin') : 0);
 		//var imgHeight = getOriginalHeightOfImg();
 		var imgHeight = $('.img-back').height();

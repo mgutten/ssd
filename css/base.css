@@ -4,9 +4,9 @@
 /* general declarations */
 @font-face {
 	font-family: 'Garamond';
-	src:url('/css/fonts/adobe_garamond_regular.ttf') format('truetype');
+	src:url('/css/fonts/Adobe_Garamond_Regular.ttf') format('truetype');
 	src:local('Garamond'),
-	local('Adobe Garamond Regular')
+	local('Adobe Garamond Regular');
 }
 
 a {
@@ -75,7 +75,7 @@ p.body-text {
 #copyright {
 	float:right;
 	clear:both;
-	margin-right:1.6%;
+	margin-right:3.2%;
 	font-size:10px;
 	letter-spacing: 1px;
 	color:#999;
@@ -343,6 +343,10 @@ p.body-text {
 	
 }
 
+#animate-outer-container.animate-outer-container-room {
+	width:101%;
+}
+
 #animate-outer-container.animate-outer-container-press {
 	width: 202%;
 	
@@ -355,6 +359,10 @@ p.body-text {
 	overflow:hidden;
 	margin-left:-1px;
 
+}
+
+.animate-inner-container-room {
+	width:100%;
 }
 
 .animate-inner-container-press {
@@ -374,15 +382,19 @@ p.body-text {
 .img-back-portfolio-container,.img-back-press-container,.img-back-room-container {
 	float:left;
 	width:33%;
-	height:auto;
+
 }
 
 .img-back-room-container {
 	width: 20%;
+	/*fix to prevent pixel rounding for img resize*/
+	overflow:hidden;	
 }
 
 .img-back-press-container {
-	width:12.5%
+	width:12.5%;
+	/*fix to prevent pixel rounding for img resize*/
+	overflow:hidden;
 }
 
 #cartouche {
@@ -524,6 +536,7 @@ p.body-text {
 	padding:8px 0px 0px 15%;
 	text-align:left;
 	font-size:12px;
+	display:none;
 	width:100%;
 }
 
@@ -542,6 +555,7 @@ p.body-text {
 	height:auto;
 	z-index:1000;
 	float:left;
+	display:none;
 	position:relative;
 }
 
@@ -572,8 +586,9 @@ p.body-text {
 	clear:both;
 	position:relative;
 	width:50%;
+	min-width:210px;
 	height:auto;
-	margin-left:20%;
+	margin-left:16%;
 	background:#fff;
 	padding:5px;
 	display:none;
@@ -626,6 +641,18 @@ p.body-text {
 	font-size:13px;
 }
 
+
+.loading {
+	position:absolute;
+	width:32px;
+	height:32px;
+	top:50%;
+	left:50%;
+	margin: -16px 0px 0px -16px;
+	z-index: 300;
+	opacity:0;
+	filter:alpha(opacity=0);
+}
 
 
 /*override general declarations */

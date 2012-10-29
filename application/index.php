@@ -13,13 +13,21 @@ $head->close();
 $body = new Body();
 $body->lower();
 
+
+
 //cancel animation if already seen it
-if(strpos($_SERVER['HTTP_REFERER'],'stephenshubel') !== false )
+if(@strpos($_SERVER['HTTP_REFERER'],'stephenshubel') !== false && @strpos($_SERVER['HTTP_REFERER'],'google') == false )
 	echo "<span id='animation-clearance' class='nope'></span>";
 ?>
 
 <img src='/images/home/home_01.jpg' id='home-img-shown' class='img-back'/>
 <img src='/images/home/home_04.jpg?<?php echo microtime(true);?>' id='home-img-hidden' class='img-back'/>
+
+<?php
+
+$body->close();
+
+?>
 
 <div id='animation-container' class='animation'>
 
@@ -32,6 +40,7 @@ if(strpos($_SERVER['HTTP_REFERER'],'stephenshubel') !== false )
         
 
 </div>
+
 
 <img src='/images/nav/logo.png' id='animation-logo' />
 
