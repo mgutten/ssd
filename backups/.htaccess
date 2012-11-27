@@ -1,0 +1,35 @@
+RewriteEngine On  
+RewriteBase /
+
+RewriteCond %{HTTP_HOST} ^stephenshubeldesign\.com$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.stephenshubeldesign\.com$
+RewriteRule ^/?$ "http\:\/\/www\.stephenshubel\.com\/" [R=301,L]
+
+# Append trailing slash
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI} !(?:\.\w+|/)$
+RewriteRule ^(.*)$ /$1/ [L]
+
+# First round through, prepend 'application/' to request
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI} !^/application
+RewriteRule ^(.*)$ application/$1 [L]
+
+# Second round through, if the new url is not directory or file, append .php
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI} !\.\w+$
+RewriteRule ^(.*)/$ $1.php [L]
+
+#rewrite variables for individual pages
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI}  portfolio
+
+#RewriteRule ^(.*)/(\d+)$ $1/index.php?page=$2 [L]
+
+#php_value auto_prepend_file "X:/Program Files (x86)/wamp/www/Local_site/ssd/includes/head.php"
+
+
+

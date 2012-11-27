@@ -36,7 +36,9 @@ $body->lower();
                     <input type='text' class='subscribe-input text' name='email'  />
                     <p class='text'>Email:</p>
                 </span>
-          	  <input type='image' src="/images/products/submit.jpg" class='subscribe-input-submit'/>
+                <span class='subscribe-inner-container'>
+          	  		<input type='image' src="/images/products/submit.jpg" class='subscribe-input-submit'/>
+             	</span>
            </form>
         </div>
         
@@ -53,5 +55,6 @@ $body->lower();
 </div>
 
 <?php
+	
 	}
 		

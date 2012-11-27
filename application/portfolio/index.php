@@ -15,7 +15,7 @@ $body->lower();
 	<div id='animate-inner-container1' class='animate-inner-container'>
 
         <div class='img-back-portfolio-container'><img src="/images/portfolio/portfolio_01.jpg" class='img-back img-back-portfolio whiteout' text='BELVEDERE VILLA'/></div>
-        <span class='hidden portfolio-text'>This European-style residence has strong Mediterranean influences and is bathed in hues of saffron, terracotta and ocher.  
+        <span class='hidden portfolio-text'>Bathed in hues of saffron, terracotta and ocher, this European-style residence has strong Mediterranean influences.  
         The design focuses on the enjoyment of the finer things in life and includes a chef inspired kitchen, relaxing spa, media room, and a sumptuous bedroom.
         </span>
         
@@ -25,7 +25,7 @@ $body->lower();
         </span>
         
         <div class='img-back-portfolio-container'><img src="/images/portfolio/portfolio_03.jpg" class='img-back-portfolio whiteout' text='PRESIDIO HEIGHTS RESIDENCE'/></div>
-        <span class='hidden portfolio-text'>This Edwardian style residence located in San Francisco's Presidio Heights was designed to reflect the client's personal 
+        <span class='hidden portfolio-text'>Located in San Francisco's Presidio Heights, this Edwardian style residence was designed to reflect the client's personal 
         fashion and creative styles.  By combining bold patterns and fresh colors with an eclectic mix of furniture, Stephen Shubel was able to create a runway ready interior.
         </span>
     
@@ -34,7 +34,7 @@ $body->lower();
 
         <div class='img-back-portfolio-container'><img src="/images/portfolio/portfolio_04.jpg" class='img-back-portfolio whiteout' text="PARIS PIED-&Aacute-TERRE"/></div>
         <span class='hidden portfolio-text'>
-        This Marais district pied-&aacute;-terre, just steps from the Place des Vosges, is over 400 years old.  It has been transformed into a luxurious warehouse perfect for travel decompression and antique 
+        Just steps from the Place des Vosges, this Marais district pied-&aacute;-terre is over 400 years old.  It has been transformed into a luxurious warehouse perfect for travel decompression and antique 
         storage.  The atelier functions as a design studio, living room, dining room, and bedroom. The tiny 400-square-foot space also functions as a showroom for flea market treasures coming and going 
         with every sale.  
         </span>
@@ -45,7 +45,7 @@ $body->lower();
         </span>        
         <div class='img-back-portfolio-container'><img src="/images/portfolio/portfolio_06.jpg" class='img-back-portfolio whiteout' text='BEACH HOUSE' /></div>
         <span class='hidden portfolio-text'>
-        This stylish 1960's beach bungalow was designed as a guesthouse for the young at heart.  By working with the existing architecture and blending modern furniture with nautical nuances, 
+        The 1960's beach bungalow was designed as a stylish guesthouse for the young at heart.  By working with the existing architecture and blending modern furniture with nautical nuances, 
         Stephen Shubel was able to create a space any coastal vacationer would be happy to call home.
         </span>        
         
@@ -89,9 +89,10 @@ $body->lower();
         <div class='img-back-portfolio-container'><img src="/images/portfolio/portfolio_12.jpg" class='img-back-portfolio whiteout' id='img-back-portfolio-last' text="FISHERMAN'S COTTAGE" 
         onload="sequentialFade('.img-back-portfolio',500)"/></div>
         <span class='hidden portfolio-text'>
-        Nautical memorabilia and gilded treasures float swimmingly in the sea of white painted redwood paneling. Also, the all white palette lends itself well to being a laboratory for new color and d&eacutecor experiments. 
+        Nautical memorabilia and gilded treasures float swimmingly in the sea of white painted redwood paneling. The all white palette lends itself well to being a laboratory for new color and d&eacute;cor experiments. 
         This cottage has seen many different decorating lives over the years including everything from classic black and white to citrus punch inspired accents. 
-        </span>        
+        </span>  
+              
         
     
     </div>

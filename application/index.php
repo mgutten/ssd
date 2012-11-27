@@ -21,7 +21,7 @@ if(@strpos($_SERVER['HTTP_REFERER'],'stephenshubel') !== false && @strpos($_SERV
 ?>
 
 <img src='/images/home/home_01.jpg' id='home-img-shown' class='img-back'/>
-<img src='/images/home/home_04.jpg?<?php echo microtime(true);?>' id='home-img-hidden' class='img-back'/>
+<img src='/images/home/home_02.jpg?<?php echo microtime(true);?>' id='home-img-hidden' class='img-back'/>
 
 <?php
 
@@ -54,5 +54,14 @@ $body->close();
 <img src='/images/home/home_08.jpg' class='hidden' />
 <img src='/images/home/home_09.jpg' class='hidden' />
 <img src='/images/home/home_10.jpg' class='hidden' />
+<img src='/images/home/home_11.jpg' class='hidden' />
+<img src='/images/home/home_12.jpg' class='hidden' />
+<img src='/images/home/home_13.jpg' class='hidden' />
+<img src='/images/home/home_14.jpg' class='hidden' />
+<img src='/images/home/home_15.jpg' class='hidden' />
+<img src='/images/home/home_16.jpg' class='hidden' />
+<img src='/images/home/home_17.jpg' class='hidden' />
+<img src='/images/home/home_18.jpg' class='hidden' />
+
 
 

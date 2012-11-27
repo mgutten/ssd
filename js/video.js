@@ -9,6 +9,14 @@ var stretch;
 
 $(function() {
 	
+	//temporary fix for old versions of internet explorer (not fully debugged for launch)
+	if($.browser.msie && parseInt($.browser.version, 10) <= 8) {
+    	
+		window.location='/error';
+			
+	} 
+
+	
 	originalMargin = 0;
 	//find starting positions for player add 10 px to fix layout bug
 	//playerHeight = Math.round(getOriginalHeightOfImg());

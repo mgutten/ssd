@@ -12,6 +12,8 @@ class General {
 						'by project'=>'/portfolio',
 						'by room'=>'/portfolio/room',
 						'about'=>'/about',
+						'bios'=>'/about',
+						'firm'=>'/about/firm',
 						'home'=>'/');
 						
 							
@@ -49,7 +51,9 @@ class Head extends General {
 						<link rel='shortcut icon' href='/favicon.ico' type='image/x-icon'> ";
 						
 				echo $this->style($this->style);
-				echo $this->script($this->script);
+				//case when on error page, need to exclude base.js
+				if($title != 'Error')
+					echo $this->script($this->script);
 				
 		}
 			
@@ -105,9 +109,9 @@ class Head extends General {
 								$pos = strpos($value,'http');
 								
 								if($pos===false)
-									$block .= "<script type='text/javascript' src='/js/".$value.".js?1.0'></script>\n";
+									$block .= "<script type='text/javascript' src='/js/".$value.".js?1.01'></script>\n";
 								else
-									$block .= "<script type='text/javascript' src='" . $value . ".js?1.0'></script>\n";
+									$block .= "<script type='text/javascript' src='" . $value . ".js?1.01'></script>\n";
 															
 						}
 				}
@@ -118,9 +122,9 @@ class Head extends General {
 						$script_array = str_replace(' ','_',$script_array);
 						
 						if($pos===false)
-								$block .= "<script type='text/javascript' src='/js/".$script_array.".js?1.0'></script>\n";
+								$block .= "<script type='text/javascript' src='/js/".$script_array.".js?1.01'></script>\n";
 						else
-								$block .= " <script type='text/javascript' src='".$script_array.".js?1.0'></script>\n";
+								$block .= " <script type='text/javascript' src='".$script_array.".js?1.01'></script>\n";
 				}
 				
 				return $block;
@@ -152,7 +156,9 @@ class Navigation extends General {
 								'portfolio'=>array('portfolio',
 													'by project',
 													'by room'),
-								'about'
+								'about'=>array('about',
+												'bios',
+												'firm')
 								);
 	
 	//return image location for logo
@@ -293,7 +299,7 @@ class Body extends General {
 			
 		echo "</div>";
 		
-		echo "<span id='copyright' class='text'>&copy; " . date('Y') . " STEPHEN SHUBEL DESIGN, INC.</span>";
+		echo "<div id='copyright-container'><span id='copyright' class='text'>&copy; " . date('Y') . " STEPHEN SHUBEL, INC.</span></div>";
 		
 		$this->closed = true;
 		

@@ -9,7 +9,7 @@ var originalMargin;
 var animateNumber = 1;
 
 //set the ratio of change for each size change
-var ratioOfChange = 100;
+var ratioOfChange = 95;
 
 //var to test if slide animation is already running
 var running = false;
@@ -35,18 +35,43 @@ var curSecondarySlide = 1;
 var timeout;
 
 
+//GOOGLE ANALYTICS TRACKING
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-36199650-1']);
+_gaq.push(['_setDomainName', 'stephenshubel.com']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+//END GOOGLE ANALYTICS
+
 
 $(function() {
+	
+		
+	
+	//temporary fix for old versions of internet explorer (not fully debugged for launch)
+	if($.browser.msie && parseInt($.browser.version, 10) <= 6) {
+    	
+			window.location = '/error';
+		
+		
+	} 
     //set the font size using jquery
     //$(".text").css("font-size", originalFontSize);
 	
 	//subtract 6% from body width to account for arrows on each side
 	originalBodWidth = 	$('#body-lower').width();
 	
+	
 	//originalFontSize = originalBodWidth * 1/85;
 	//store original font size for body-text in ele
 	$('.body-text').each(function() {
 			this.originalFontSize = parseInt($(this).css('font-size'),10) * (originalBodWidth * 1/1100);
+			
 	})
 	
 	//store original margin of each element within the lower body section
@@ -91,11 +116,14 @@ $(function() {
 	//select dropdown options
 	if(isiPhone()){
 		
-		$('#nav-portfolio').click(function() {
+		$('#nav-portfolio,#nav-about').click(function() {
 				return false;
 		});
-	}
 		
+		
+	
+	}
+			
 	
 	
 	$('.dropdown-inner').each(function() {
@@ -108,7 +136,7 @@ $(function() {
 		
 		//move inner dropdown to hidden
 		$(this).css('margin-top',-$(this).prop('innerHeight') + 'px');
-		
+	
 		
 		//portfolio dropdown center inner navigation titles since they are wider
 		if($(this).is('#portfolio'))
@@ -123,12 +151,12 @@ $(function() {
 	$(".dropdown,.dropdown-inner").hover(
 	
 		function() {
+			
 			var ele;
 			if($(this).is('.dropdown-inner'))
 				ele = $(this);
 			else
 				ele = $(this).next('.dropdown-outer').children('.dropdown-inner');
-				
 				
 			ele.stop().animate({'margin-top':'0px'},300);
 		},
@@ -200,35 +228,7 @@ $(function() {
 		dropdownResize();
 
 		
-	});
-	
-	
-	
-	
-	
-
-
-
-	/* sequential fade effect for portfolio (DISABLED) onload event in html instead
-	$('#img-back-portfolio-last').load(function() {
-			
-			sequentialFade('.img-back-portfolio',500)
-	})
-	
-	/* sequential fade effect for press 
-	if($.browser.msie){
-		setTimeout(function() {
-			sequentialFade('.img-back-press',200)
-			}, 1500)
-	}
-	else{
-		$('#img-back-press-last').load(function() {
-	
-				sequentialFade('.img-back-press', 200)
-		})
-	}
-	*/
-	
+	});	
 	
 	
 })
@@ -250,7 +250,7 @@ function dropdownResize() {
 			var parent_ele = $('#nav-' + id);
 			var top = parent_ele.offset().top + $('.nav').height();
 			var left = parent_ele.offset().left + 1;
-			var width = $(this).width();
+			var width = 90;
 			
 			
 			//edits for about dropdown
@@ -263,11 +263,8 @@ function dropdownResize() {
 			$(this).parent().css({'top': top,
 								'left': left,
 								'width': width});
-			
-			$(this).show().children().show();
-
 								
-			
+			$(this).show().children().show();
 			
 		});
 }
@@ -339,7 +336,7 @@ function textSize() {
 				
 		//our window is larger than the original so increase font size
 		var pixelsToIncrease = Math.round(widthDiff / ratioOfChange);
- 					
+ 				
 			$('.body-text').each(function() {
 				
 				//calculate the new font size

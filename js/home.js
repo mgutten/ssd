@@ -2,15 +2,24 @@
 
 //array of images to be displayed (.jpg)
 var imgs = new Array('home_01',
-					'home_04',
 					'home_02',
-					'home_10',
 					'home_03',
-					'home_07',
-					'home_06',
-					'home_09',
+					'home_04',
 					'home_05',
-					'home_08');
+					'home_06',
+					'home_07',
+					'home_08',
+					'home_09',
+					'home_10',
+					'home_11',
+					'home_12',
+					'home_13',
+					'home_14',
+					'home_15',
+					'home_16',
+					'home_17',
+					'home_18'
+							);
 //cur_img refers to hidden back img
 var cur_img = 0;	
 //page used to determine img location

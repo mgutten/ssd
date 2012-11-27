@@ -2,6 +2,7 @@
 var loadingTimeout;
 
 $(function() {
+
 	
 	/* center img onclick portfolio */
 	$('.whiteout').click(function() {
@@ -82,7 +83,7 @@ $(function() {
 		
 		//reset body-lower height
 		$('#body-lower').css('height',$('.animate-inner-container').height());
-
+		
 		//hide loading gif if not already hidden
 		$('.loading').hide();
 		
@@ -180,7 +181,9 @@ $(function() {
 			}
 			
 			//close cartouche on portfolio page
-			closeCartouche(true);
+			//prevent multiple fires
+			if($('#cartouche').css('display') != 'none')
+				closeCartouche(true);
 
 			
 			animateSlide(-1,$('.animate-slide-outer'));
@@ -262,8 +265,8 @@ $(function() {
 		resize();
 	})
 	
-
 	
+
 });
 
 
@@ -280,6 +283,7 @@ function closeCartouche(slide) {
 	
 	if(slide)
 		$('#cartouche').animate({'left': $('#body-lower').offset().left - 500},300)
+	
 	
 }
 
@@ -360,7 +364,7 @@ function indicatorResize() {
 function animateMarginSize(element) {
 		var animateNum = Math.round(parseInt(element.parent().css('margin-left'),10)/element.width());
 		var newMargin = (element.width() * (animateNum)) - (animateNum * 1);
-		var width = element.length * $('#body-lower').width();		
+		var width = element.length * ($('#body-lower').width() * 1.015);		
 		
 		element.parent().css({'margin-left': newMargin,
 								'width': width});
@@ -407,6 +411,8 @@ function windowLoad() {
 				
 		})
 		
+
+		
 }
 
 //change = # of slides to change
@@ -450,6 +456,7 @@ function customAnimateSlide(change) {
 
 function animateSlide(nextOrLast, element) {
 		
+		
 		//test if animation is already running
 		//prevent multiple fires
 		if(running)
@@ -465,7 +472,7 @@ function animateSlide(nextOrLast, element) {
 		var curMargin = parseInt(element.css('margin-left'),10);
 		var width = (element.children().width()) * nextOrLast;
 		var newMargin = (curMargin + width)  + 'px';
-		
+	
 		element.animate({'margin-left': newMargin}, 
 					{duration:300,
 					complete:function() {
@@ -537,7 +544,6 @@ function testArrows() {
 	
 	
 	var element = (viewing ? $('.animate-slide-inner') : $('.animate-inner-container'));
-	
 
 	if(element.length > 1)
 		$('.arrow-container').animate({'opacity':'1'},400).children().css('cursor','pointer');
@@ -613,7 +619,7 @@ function changeIndicator(secondOrMain) {
 
 
 function animateImgExpand(element) {
-		
+				
 		//set sliding var so mouseover does not fire
 		sliding = true;
 		viewing = true;
@@ -630,7 +636,7 @@ function animateImgExpand(element) {
 		else
 			var left = ($(window).width() - (element.width()))/2;
 		
-				
+			
 		
 		//change background color #fffbef
 		//$('.animate-inner-container').css('background','#000')
@@ -646,6 +652,7 @@ function animateImgExpand(element) {
 																								if(!loadingTimeout){
 																									loadingTimeout = setTimeout(function() {
 																										$('.loading').show().animate({'opacity':'1'},400);
+																										loadingTimeout = true;
 																									}, 300)
 																								}
 																								
@@ -655,8 +662,11 @@ function animateImgExpand(element) {
 			
 			//move cartouche
 			var top = (($('#body-lower').height() - $('#cartouche').height())/2);
+			var left = ($('#body-lower').width())/2;
+			
 			$('#cartouche').css({'top': top,
-									'left': '50%'});
+									'left': left});
+																		
 			
 			
 			//populate cartouche with text for this project
@@ -675,7 +685,7 @@ function animateImgExpand(element) {
 			
 			if(!loadingTimeout)
 				loadingTimeout = true;
-								
+							
 			//animate img to full opacity
 			element.stop().animate({'opacity':'1'},{duration:600,queue:false});
 			//at same time move to middle of screen
@@ -699,6 +709,8 @@ function animateImgExpand(element) {
 											$('.x,#background').show();
 											testArrows();
 											loadingTimeout = false;
+											
+											
 										},500)
 										
 										
@@ -816,7 +828,6 @@ function displayImgs(fileArray) {
 				}
 				
 				loadingTimeout = false;
-				
 				
 				$('.loading').stop().css('opacity','1').hide()
 				
